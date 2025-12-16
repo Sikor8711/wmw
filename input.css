@@ -1,0 +1,76 @@
+@import 'tailwindcss';
+@font-face {
+  font-family: "Gistesy";
+  src: url("/fonts/gistesy/Gistesy.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "LibreBaskerville";
+  src: url("/fonts/libre_baskerville/LibreBaskerville-Regular.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-gistesy: "Gistesy";
+  --font-baskerville: "LibreBaskerville";
+}
+@layer base {
+  html {
+    @apply text-[#554b43];
+    font-family: "LibreBaskerville", system-ui, sens-serif;
+    
+  }
+  body {
+    background-color: #f9f7f3;
+    max-width: 900px;
+    margin-inline: auto;
+  }
+  .atext {
+    font-size: 12vw;
+    line-height: 12vw;
+  }
+
+  .bottom-line {
+    /* visual style */
+    stroke: #554b43;
+    stroke-width: 2;       /* adjust thickness here */
+    stroke-linecap: round;
+    fill: #554b43;
+
+    /* start with no fill visible */
+    fill-opacity: 0;
+    /* stroke visible at start */
+    stroke-opacity: 1;
+
+    /* snake draw setup – using your measured length ≈ 1700 */
+    stroke-dasharray: 1700;
+    stroke-dashoffset: 1700;
+
+    /* one animation to rule them all 😈 */
+    animation: draw-fill-hide-stroke 2.5s ease-out forwards;
+  }
+
+  @keyframes draw-fill-hide-stroke {
+    0% {
+      stroke-dashoffset: 1700; /* line hidden */
+      fill-opacity: 0;         /* no fill */
+      stroke-opacity: 1;       /* stroke visible */
+    }
+
+    70% {
+      stroke-dashoffset: 0;    /* line fully drawn */
+      fill-opacity: 0;         /* still no fill */
+      stroke-opacity: 1;       /* stroke still visible */
+    }
+
+    100% {
+      stroke-dashoffset: 0;    /* line stays drawn */
+      fill-opacity: 1;         /* fill fades in */
+      stroke-opacity: 0;       /* stroke fades out */
+    }
+  }
+}

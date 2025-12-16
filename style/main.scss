@@ -1,4 +1,23 @@
+@font-face {
+  font-family: Gistesy;
+  src: url(../assets/fonts/gistesy/Gistesy.ttf)
+}
+@font-face {
+  font-family: LibreBaskerville;
+  src: url(../assets/fonts/libre_baskerville/LibreBaskerville-Regular.ttf)
+}
 body {
-	font-family: sans-serif;
-	text-align: center;
+  font-family: LibreBaskerville;
+}
+.Layout-wrapper {
+  margin: 0px;
+  padding: 0px;
+}
+.logo {
+  max-height: 50px;
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  transform: translateX(-10%)
 }
