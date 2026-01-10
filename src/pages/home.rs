@@ -6,7 +6,7 @@ pub fn HomePage() -> impl IntoView {
         <div class="max-w-225 mx-auto">
             <div class="relative m-7">
                 <div class="absolute right-0 bottom-0 size-[85%] bg-[#eae2dc] -z-100"></div>
-                <div class="-z-10 mask-t-from-0% mask-b-to-100% bg-[url(/assets/images/luiza_bnner.png)] bg-contain bg-no-repeat">
+                       <div class="-z-10 mask-t-from-0% mask-b-to-100% bg-[url(/assets/images/luiza_bnner.png)] bg-contain bg-no-repeat">
                     <img
                         src="/assets/images/luiza_bnner.png"
                         alt="Luiza"
@@ -61,8 +61,39 @@ pub fn HomePage() -> impl IntoView {
                         "back to " <span class="font-gistesy text-5xl">"life."</span>
                     </p>
                 </div>
-                <div class="flex basis-2/3">
-                    <button class="bg-white rounded-3xl p-2">"Let's go WILD!"</button>
+                <div class="grid grid-cols-2 content-center mx-2">
+                    <div class="place-self-center h-25 w-30 mr-5" src="/#" alt="">
+                        <img class="h-25 w-30" src="/#" alt=""/>
+                    </div>
+                    <div class="place-self-center">
+                    <div class="h-full flex items-center">
+                        <img class="max-w-8 mr-0.5" src="../../assets/images/button_deco.png" alt=""/>
+                        <button class="text-nowrap text-[0.8rem] bg-white h-auto rounded-3xl p-2 shadow-2xl ">"Let's go WILD!"</button>
+                        <img class="scale-x-[-1] max-w-8 ml-0.5" src="../../assets/images/button_deco.png" alt=""/>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p class="py-8 text-center font-gistesy md:text-5xl text-[8vw] text-nowrap">"You’re freaking magnetic and you know it."</p>
+        </div>
+        <TagButton bname="FREE GUIDE" />
+        <div class="bg-[url(/assets/images/pokoj.png)] bg-no-repeat bg-cover">
+            <div class="grid grid-cols-2 pt-3 bg-white/80">
+                <div class="place-self-center pl-2">
+                    <h2 class="text-[1rem] pb-3 text-center">"The Magnetic Message"</h2>
+                    <p class="text-[0.8rem] text-center">"A soulful guid to finding the message that your dream clients can feel - and can't resist"</p>
+                    <div class="flex">
+                        <form class="text-xs mx-auto w-[90%] space-y-3 pt-3" action="">
+                            <input class="border w-full p-1" type="text"/>
+                            <input class="border w-full p-1" type="email" />
+                            <button class="w-full text-center text-xs text-[#554b43] text-nowrap p-2 bg-[#d9b8ae]">"DIVE INTO FREE GUIDE"</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="pt-3 pr-2">
+                    <img src="/assets/images/monitorki.png" alt=""/>
                 </div>
             </div>
         </div>
