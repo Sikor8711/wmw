@@ -1,10 +1,10 @@
 @font-face {
   font-family: Gistesy;
-  src: url(../assets/fonts/gistesy/Gistesy.ttf)
+  src: url(../assets/fonts/gistesy/Gistesy.ttf);
 }
 @font-face {
   font-family: LibreBaskerville;
-  src: url(../assets/fonts/libre_baskerville/LibreBaskerville-Regular.ttf)
+  src: url(../assets/fonts/libre_baskerville/LibreBaskerville-Regular.ttf);
 }
 body {
   font-family: LibreBaskerville;
@@ -19,5 +19,5 @@ body {
   margin: auto;
   display: flex;
   justify-content: center;
-  transform: translateX(-10%)
+  transform: translateX(-10%);
 }

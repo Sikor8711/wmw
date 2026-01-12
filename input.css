@@ -1,14 +1,14 @@
 @import "tailwindcss";
 @font-face {
   font-family: "Gistesy";
-  src: url("/fonts/gistesy/Gistesy.ttf") format("truetype");
+  src: url("fonts/gistesy/Gistesy.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "LibreBaskerville";
-  src: url("/fonts/libre_baskerville/LibreBaskerville-Regular.ttf")
+  src: url("fonts/libre_baskerville/LibreBaskerville-Regular.ttf")
     format("truetype");
   font-weight: 200;
   font-style: normal;
@@ -23,10 +23,7 @@
     @apply text-[#554b43];
     font-family: "LibreBaskerville", system-ui, sens-serif;
   }
-  * {
-    padding: 0;
-    margin: 0;
-  }
+
   body {
     background-color: #f9f7f3;
     max-width: 900px;
@@ -35,6 +32,10 @@
   .atext {
     font-size: 12vw;
     line-height: 12vw;
+  }
+  .atext2 {
+    font-size: 4vw;
+    line-height: 1vw;
   }
   .bottom-line {
     /* visual style */
