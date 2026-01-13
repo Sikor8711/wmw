@@ -1,5 +1,4 @@
 use crate::models::CustomerData;
-use leptos::logging::log;
 use leptos::prelude::*;
 use leptos::{ev::SubmitEvent, html::Input};
 #[component]
@@ -33,18 +32,20 @@ pub fn NewsForm() -> impl IntoView {
         {move || match saved_data.get() {
             Some(data) => view! {
                 <div class="text-center mx-auto space-y-3 pt-3">
-                    <h3 class="text-3xl">"Thank you!"</h3>
-                    <p>"Welcome, "{data.first_name}</p>
-                    <p>"We will email you at: "{data.email}</p>
-
+                    <h3 class="text-xl">"Confirm email."</h3>
+                    <p class="text-sm">{data.first_name}"- please confirm your email addres"</p>
+                    <p class="text-sm">"psst: Check spam folder and move to inbox"</p>
+                    <p class="text-sm">"XOXO"</p>
                 </div>
             }.into_any(),
             None => view! {
+                <h2 class="text-[1rem] pb-3 text-center">"The Magnetic Message"</h2>
+                <p class="text-[0.8rem] text-center">"A soulful guide to finding the message that your dream clients can feel — and can’t resist."</p>
                 <form on:submit=on_submit class="text-xs mx-auto space-y-3 pt-3">
-                    <input class="border w-full p-1" type="text" placeholder="First name"
+                    <input required class="border w-full p-1" type="text" placeholder="First name"
                         node_ref=first_name_ref
                     />
-                    <input class="border w-full p-1" type="email" placeholder="Email"
+                    <input required class="border w-full p-1" type="email" placeholder="Email"
                         node_ref=email_ref
                     />
                     <button type="submint" class="w-full text-center text-xs text-[#554b43] text-nowrap p-2 bg-[#d9b8ae]">"DIVE INTO FREE GUIDE"</button>
