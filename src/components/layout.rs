@@ -1,5 +1,6 @@
-use leptos::prelude::*;
+use crate::components::footer::Footer;
 use crate::components::navbar::NavBar;
+use leptos::prelude::*;
 use leptos_router::components::Outlet;
 
 #[component]
@@ -12,6 +13,9 @@ pub fn MainLayout() -> impl IntoView {
             <main>
                 <Outlet />
             </main>
+            <footer>
+                <Footer />
+            </footer>
         </div>
     }
 }
