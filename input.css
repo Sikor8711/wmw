@@ -1,22 +1,37 @@
 @import "tailwindcss";
-@font-face {
-  font-family: "Gistesy";
-  src: url("fonts/gistesy/Gistesy.ttf") format("truetype");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
-@font-face {
-  font-family: "LibreBaskerville";
-  src: url("fonts/libre_baskerville/LibreBaskerville-Regular.ttf")
-    format("truetype");
-  font-weight: 200;
-  font-style: normal;
-  font-display: swap;
-}
 @theme {
   --font-gistesy: "Gistesy";
   --font-baskerville: "LibreBaskerville";
+}
+@font-face {
+  font-family: "Gistesy";
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+  src: url("/assets/fonts/gistesy/Gistesy.ttf") format("truetype");
+}
+@font-face {
+  font-family: "LibreBaskerville";
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+  src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Regular.ttf")
+    format("truetype");
+}
+body {
+  font-family: LibreBaskerville;
+}
+.Layout-wrapper {
+  margin: 0px;
+  padding: 0px;
+}
+.logo {
+  max-height: 50px;
+  max-width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  transform: translateX(-10%);
 }
 @layer base {
   html {
