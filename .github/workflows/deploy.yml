@@ -1,4 +1,4 @@
-name: Deploy WMW (via Proxy)
+name: Deploy WMW (Secure)
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.PROXY_HOST }} >> ~/.ssh/known_hosts
 
-      # 2. UPLOAD BINARY (To /tmp first to avoid permission errors)
+      # 2. UPLOAD BINARY (To /tmp - Safe & Fast)
       - name: Upload Binary to Temp
         uses: appleboy/scp-action@master
         with:
@@ -52,13 +52,12 @@ jobs:
           proxy_username: ${{ secrets.PROXY_USER }}
           proxy_key: ${{ secrets.PROXY_KEY }}
 
-          # Upload to temp folder first
           source: "target/release/${{ env.PROJECT_NAME }}"
           target: "/tmp"
           strip_components: 2
           overwrite: true
 
-      # 3. UPLOAD ASSETS (To /tmp first)
+      # 3. UPLOAD ASSETS (To /tmp - Safe & Fast)
       - name: Upload Assets to Temp
         uses: appleboy/scp-action@master
         with:
@@ -69,14 +68,13 @@ jobs:
           proxy_username: ${{ secrets.PROXY_USER }}
           proxy_key: ${{ secrets.PROXY_KEY }}
 
-          # Upload to temp folder first
           source: "target/site"
           target: "/tmp/leptos_site"
           strip_components: 1
           overwrite: true
 
-      # 4. INSTALL & RESTART (Move files with sudo)
-      - name: Install and Restart
+      # 4. EXECUTE SECURE DEPLOY SCRIPT
+      - name: Run Deploy Script
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -85,19 +83,7 @@ jobs:
           proxy_host: ${{ secrets.PROXY_HOST }}
           proxy_username: ${{ secrets.PROXY_USER }}
           proxy_key: ${{ secrets.PROXY_KEY }}
-
-          # This action DOES support options, so we use them here for safety
           proxy_strict: false
-          script: |
-            # 1. Move Binary (using sudo to overwrite protected files)
-            sudo mv /tmp/${{ env.PROJECT_NAME }} /var/www/rutst/test_sikormedia_com/${{ env.PROJECT_NAME }}
-            sudo chmod +x /var/www/rutst/test_sikormedia_com/${{ env.PROJECT_NAME }}
 
-            # 2. Move Site Assets (Clean old folder first)
-            sudo rm -rf /var/www/leptos_app/*
-            sudo cp -r /tmp/leptos_site/* /var/www/leptos_app/
-            sudo rm -rf /tmp/leptos_site
-
-            # 3. Restart Service
-            sudo systemctl restart wmw
-            sudo systemctl status wmw --no-pager
+          # This runs the specific script we authorized in sudoers
+          script: sudo /usr/local/bin/deploy_wmw.sh
