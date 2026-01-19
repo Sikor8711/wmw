@@ -1,22 +1,51 @@
-name: Debug SSH Connection
-on: push
+name: Deploy WMW (via Proxy)
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  PROJECT_NAME: wmw
 
 jobs:
-  debug-deploy:
+  deploy:
     runs-on: ubuntu-22.04
-    steps:
-      # 1. Create a dummy file on the GitHub Runner
-      - name: Create Dummy File
-        run: echo "Connection Successful! Timestamp $(date)" > debug_test.txt
 
-      # 2. TRUST KEYS (Crucial step from before)
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # --- BUILD SECTION (Optimized) ---
+
+      - name: Install Rust Nightly
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: wasm32-unknown-unknown
+
+      # 1. FAST INSTALL: Downloads binary instead of compiling (saves ~5 mins)
+      - name: Install cargo-binstall
+        run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
+
+      # 2. CACHING: Saves dependencies so next run is instant
+      - name: Cache Rust dependencies
+        uses: Swatinem/rust-cache@v2
+
+      - name: Install cargo-leptos
+        run: cargo binstall cargo-leptos -y
+
+      - name: Build Release
+        run: cargo leptos build --release
+
+      # --- DEPLOY SECTION ---
+
+      # 3. TRUST KEYS: Adds PVE Host to known_hosts so SSH doesn't reject the connection
       - name: Trust Server Keys
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.PROXY_HOST }} >> ~/.ssh/known_hosts
 
-      # 3. Try to Copy the file (Tunneling: GitHub -> PVE -> Webserver)
-      - name: Test SCP to Private VM
+      # 4. Copy Binary (Tunnel: GitHub -> PVE Host -> Private Webserver)
+      - name: Copy Binary to VPS
         uses: appleboy/scp-action@master
         with:
           # Target (Private VM)
@@ -30,15 +59,35 @@ jobs:
           proxy_key: ${{ secrets.PROXY_KEY }}
           proxy_strict: false
 
-          # Copy the dummy file
-          source: "debug_test.txt"
-          target: "/home/sikor/"
-          # ^ Using home folder is safer for a test (no permission issues)
-
+          # Files
+          source: "target/release/${{ env.PROJECT_NAME }}"
+          target: "/var/www/rutst/test_sikormedia_com"
+          strip_components: 2
+          overwrite: true
+          # Disable strict checking for the internal VM (safe on LAN)
           options: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
-      # 4. Verify it arrived (Optional check)
-      - name: Verify File Exists
+      # 5. Copy Site Assets
+      - name: Copy Site Assets to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_username: ${{ secrets.PROXY_USER }}
+          proxy_key: ${{ secrets.PROXY_KEY }}
+          proxy_strict: false
+
+          source: "target/site"
+          target: "/var/www/leptos_app"
+          strip_components: 1
+          overwrite: true
+          options: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
+
+      # 6. Restart Service
+      - name: Restart Systemd
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -50,6 +99,8 @@ jobs:
           proxy_key: ${{ secrets.PROXY_KEY }}
           proxy_strict: false
 
+          # NOTE: Ensure user 'sikor' has NOPASSWD sudo rights for systemctl!
           script: |
-            cat /home/sikor/debug_test.txt
-            rm /home/sikor/debug_test.txt
+            chmod +x /var/www/rutst/test_sikormedia_com/${{ env.PROJECT_NAME }}
+            sudo systemctl restart wmw
+            sudo systemctl status wmw --no-pager
