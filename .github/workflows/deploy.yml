@@ -1,83 +1,44 @@
-name: Deploy WMW (via Proxy)
-
-on:
-  push:
-    branches: ["main"]
-
-env:
-  PROJECT_NAME: wmw
+name: Debug SSH Connection
+on: push
 
 jobs:
-  deploy:
-    # Using ubuntu-22.04 ensures compatibility with Debian 12/13 glibc versions
+  debug-deploy:
     runs-on: ubuntu-22.04
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+      # 1. Create a dummy file on the GitHub Runner
+      - name: Create Dummy File
+        run: echo "Connection Successful! Timestamp $(date)" > debug_test.txt
 
-      # --- BUILD OPTIMIZATIONS ---
+      # 2. TRUST KEYS (Crucial step from before)
+      - name: Trust Server Keys
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.PROXY_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Install Rust Nightly
-        uses: dtolnay/rust-toolchain@nightly
-        with:
-          targets: wasm32-unknown-unknown
-
-      # FAST FIX: Install binstall via script (seconds) instead of compiling (minutes)
-      - name: Install cargo-binstall (Fast Binary)
-        run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-
-      # CACHING: Saves dependencies so the 2nd run is nearly instant
-      - name: Cache Rust dependencies
-        uses: Swatinem/rust-cache@v2
-
-      - name: Install cargo-leptos
-        run: cargo binstall cargo-leptos -y
-
-      - name: Build Release
-        run: cargo leptos build --release
-
-      # --- DEPLOY SECTION ---
-
-      # 1. Copy the Binary (Tunneling: GitHub -> PVE Host -> Private Webserver)
-      - name: Copy Binary to VPS
+      # 3. Try to Copy the file (Tunneling: GitHub -> PVE -> Webserver)
+      - name: Test SCP to Private VM
         uses: appleboy/scp-action@master
         with:
-          # --- TARGET (Private VM: 192.168.1.50) ---
+          # Target (Private VM)
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
 
-          # --- PROXY (Public PVE Host) ---
+          # Proxy (Public PVE Host)
           proxy_host: ${{ secrets.PROXY_HOST }}
           proxy_username: ${{ secrets.PROXY_USER }}
           proxy_key: ${{ secrets.PROXY_KEY }}
+          proxy_strict: false
 
-          # --- FILES ---
-          source: "target/release/${{ env.PROJECT_NAME }}"
-          target: "/var/www/rutst/test_sikormedia_com"
-          strip_components: 2
-          overwrite: true
+          # Copy the dummy file
+          source: "debug_test.txt"
+          target: "/home/sikor/"
+          # ^ Using home folder is safer for a test (no permission issues)
 
-      # 2. Copy the Site Assets (Tunneling)
-      - name: Copy Site Assets to VPS
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_KEY }}
+          options: "-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null"
 
-          proxy_host: ${{ secrets.PROXY_HOST }}
-          proxy_username: ${{ secrets.PROXY_USER }}
-          proxy_key: ${{ secrets.PROXY_KEY }}
-
-          source: "target/site"
-          target: "/var/www/leptos_app"
-          strip_components: 1
-          overwrite: true
-
-      # 3. Restart the Service (Tunneling)
-      - name: Restart Systemd
+      # 4. Verify it arrived (Optional check)
+      - name: Verify File Exists
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
@@ -87,14 +48,8 @@ jobs:
           proxy_host: ${{ secrets.PROXY_HOST }}
           proxy_username: ${{ secrets.PROXY_USER }}
           proxy_key: ${{ secrets.PROXY_KEY }}
+          proxy_strict: false
 
           script: |
-            # 1. Make sure binary is executable
-            chmod +x /var/www/rutst/test_sikormedia_com/${{ env.PROJECT_NAME }}
-
-            # 2. Restart the service
-            # (Ensure 'sikor' has passwordless sudo for systemctl, or this will hang)
-            sudo systemctl restart wmw
-
-            # 3. Check status
-            sudo systemctl status wmw --no-pager
+            cat /home/sikor/debug_test.txt
+            rm /home/sikor/debug_test.txt
