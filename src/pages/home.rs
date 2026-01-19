@@ -145,6 +145,7 @@ pub fn HomePage() -> impl IntoView {
                 <button class="text-nowrap text-xl bg-(--bg-rose) h-auto rounded-full p-4 shadow-2xl ">"I'm So Ready to Rise!"</button>
             </div>
         </div>
+            <div>"hej"</div>
         </div>
     }
 }
