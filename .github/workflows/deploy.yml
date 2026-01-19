@@ -49,7 +49,7 @@ jobs:
 
           # --- FILES ---
           source: "target/release/${{ env.PROJECT_NAME }}"
-          target: "/var/www/leptos_app"
+          target: "/var/www/rutst/test_sikormedia_com"
           strip_components: 2
           overwrite: true
 
