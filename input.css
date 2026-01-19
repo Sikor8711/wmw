@@ -2,6 +2,12 @@
 @theme {
   --font-gistesy: "Gistesy";
   --font-baskerville: "LibreBaskerville";
+  --primary-bg: #f9f7f3;
+  --bg-sec: #eae2dc;
+  --bg-rose: #d4b3ab;
+  --bg-darker: #574b44;
+  --bg-lighter: #fcf9fa;
+  --bg-footer: #8a7769;
 }
 @font-face {
   font-family: "Gistesy";
@@ -18,9 +24,6 @@
   src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Regular.ttf")
     format("truetype");
 }
-body {
-  font-family: LibreBaskerville;
-}
 .Layout-wrapper {
   margin: 0px;
   padding: 0px;
@@ -35,12 +38,13 @@ body {
 }
 @layer base {
   html {
-    @apply text-[#554b43];
+    color: var(--bg-darker);
     font-family: "LibreBaskerville", system-ui, sens-serif;
   }
 
   body {
-    background-color: #f9f7f3;
+    font-family: LibreBaskerville;
+    background-color: var(--primary-bg);
     max-width: 900px;
     margin-inline: auto;
   }
@@ -53,41 +57,36 @@ body {
     line-height: 1vw;
   }
   .bottom-line {
-    /* visual style */
-    stroke: #554b43;
-    stroke-width: 2; /* adjust thickness here */
+    stroke: var(--bg-darker);
+    stroke-width: 2;
     stroke-linecap: round;
-    fill: #554b43;
-    /* start with no fill visible */
+    fill: var(--bg-darker);
     fill-opacity: 0;
-    /* stroke visible at start */
     stroke-opacity: 1;
-    /* snake draw setup – using your measured length ≈ 1700 */
     stroke-dasharray: 1700;
     stroke-dashoffset: 1700;
-    /* one animation to rule them all 😈 */
     animation: draw-fill-hide-stroke 5s infinite ease-out forwards;
   }
   @keyframes draw-fill-hide-stroke {
     0% {
-      stroke-dashoffset: 1700; /* line hidden */
-      fill-opacity: 0; /* no fill */
-      stroke-opacity: 1; /* stroke visible */
+      stroke-dashoffset: 1700;
+      fill-opacity: 0;
+      stroke-opacity: 1;
     }
     50% {
-      stroke-dashoffset: 0; /* line fully drawn */
-      fill-opacity: 0; /* still no fill */
-      stroke-opacity: 1; /* stroke still visible */
+      stroke-dashoffset: 0;
+      fill-opacity: 0;
+      stroke-opacity: 1;
     }
     80% {
-      stroke-dashoffset: 0; /* line stays drawn */
-      fill-opacity: 1; /* fill fades in */
-      stroke-opacity: 0; /* stroke fades out */
+      stroke-dashoffset: 0;
+      fill-opacity: 1;
+      stroke-opacity: 0;
     }
     100% {
-      stroke-dashoffset: 0; /* line stays drawn */
-      fill-opacity: 0; /* fill fades in */
-      stroke-opacity: 0; /* stroke fades out */
+      stroke-dashoffset: 0;
+      fill-opacity: 0;
+      stroke-opacity: 0;
     }
   }
 }

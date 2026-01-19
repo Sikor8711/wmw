@@ -9,7 +9,7 @@ pub fn TagButton(
 ) -> impl IntoView {
     view! {
         <div class="flex justify-center translate-y-3">
-            <h4 class="bg-[#f9f7f3] px-2 rounded-2xl">"↓ "{bname.to_string()}" ↓"</h4>
+            <h4 class="bg-white px-2 rounded-2xl">"↓ "{bname.to_string()}" ↓"</h4>
         </div>
     }
 }
@@ -48,7 +48,7 @@ pub fn NewsForm() -> impl IntoView {
                     <input required class="border w-full p-1" type="email" placeholder="Email"
                         node_ref=email_ref
                     />
-                    <button type="submint" class="w-full text-center text-xs text-[#554b43] text-nowrap p-2 bg-[#d9b8ae]">"DIVE INTO FREE GUIDE"</button>
+                    <button type="submint" class="w-full text-center text-xs text-(--bg-darker) text-nowrap p-2 bg-(--bg-rose)">"DIVE INTO FREE GUIDE"</button>
                 </form>
             }.into_any()
         }}

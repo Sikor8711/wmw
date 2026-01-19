@@ -1,0 +1,96 @@
+name: Deploy WMW (via Proxy)
+
+on:
+  push:
+    branches: ["main"]
+
+env:
+  PROJECT_NAME: wmw
+
+jobs:
+  deploy:
+    # Use ubuntu-22.04 for compatibility with Debian 12/13 glibc
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # --- BUILD SECTION ---
+      - name: Install Rust Nightly
+        uses: dtolnay/rust-toolchain@nightly
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install cargo-leptos
+        run: |
+          cargo install cargo-binstall
+          cargo binstall cargo-leptos -y
+
+      - name: Build Release
+        run: cargo leptos build --release
+
+      # --- DEPLOY SECTION ---
+
+      # 1. Copy the Binary (Tunneling through Proxy)
+      # This sends the 'wmw' executable to your private VM
+      - name: Copy Binary to VPS
+        uses: appleboy/scp-action@master
+        with:
+          # --- TARGET (The Private VM) ---
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+
+          # --- JUMP HOST (The Public VM) ---
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_username: ${{ secrets.PROXY_USER }}
+          proxy_key: ${{ secrets.PROXY_KEY }}
+
+          # --- FILES ---
+          source: "target/release/${{ env.PROJECT_NAME }}"
+          target: "/var/www/leptos_app"
+          strip_components: 2
+          overwrite: true
+
+      # 2. Copy the Site Assets (Tunneling through Proxy)
+      # This sends the .wasm, .js, and .css files
+      - name: Copy Site Assets to VPS
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_username: ${{ secrets.PROXY_USER }}
+          proxy_key: ${{ secrets.PROXY_KEY }}
+
+          source: "target/site"
+          target: "/var/www/leptos_app"
+          strip_components: 1
+          overwrite: true
+
+      # 3. Restart the Service (Tunneling through Proxy)
+      # This restarts the app on the private VM
+      - name: Restart Systemd
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_KEY }}
+
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_username: ${{ secrets.PROXY_USER }}
+          proxy_key: ${{ secrets.PROXY_KEY }}
+
+          script: |
+            # 1. Make sure the binary is executable
+            chmod +x /var/www/leptos_app/${{ env.PROJECT_NAME }}
+
+            # 2. Restart the service
+            # (Requires your user to have sudo rights or use root)
+            sudo systemctl restart wmw
+
+            # 3. Check status
+            sudo systemctl status wmw --no-pager
