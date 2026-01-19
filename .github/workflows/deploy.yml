@@ -86,7 +86,7 @@ jobs:
 
           script: |
             # 1. Make sure the binary is executable
-            chmod +x /var/www/leptos_app/${{ env.PROJECT_NAME }}
+            chmod +x /var/www/rutst/test_sikormedia_com/${{ env.PROJECT_NAME }}
 
             # 2. Restart the service
             # (Requires your user to have sudo rights or use root)
