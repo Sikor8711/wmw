@@ -16,7 +16,7 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # --- BUILD SECTION ---
+        # --- BUILD SECTION ---
       - name: Install Rust Nightly
         uses: dtolnay/rust-toolchain@nightly
         with:
@@ -30,22 +30,22 @@ jobs:
       - name: Build Release
         run: cargo leptos build --release
 
-      # --- DEPLOY SECTION ---
+        # --- DEPLOY SECTION ---
 
-      # 1. Copy the Binary (Tunneling through Proxy)
-      # This sends the 'wmw' executable to your private VM
-      - name: Copy Binary to VPS
+        # 1. Copy the Binary (Tunneling through Proxy)
+        # This sends the 'wmw' executable to your private VM
+      - name: Copy Binary to Webserver VM (via PVE Host)
         uses: appleboy/scp-action@master
         with:
-          # --- TARGET (The Private VM) ---
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_KEY }}
+          # --- TARGET (The Private VM: 192.168.1.50) ---
+          host: ${{ secrets.VPS_HOST }} # Value: 192.168.1.50
+          username: ${{ secrets.VPS_USER }} # Value: sikor (on VM)
+          key: ${{ secrets.VPS_KEY }} # Private Key for VM
 
-          # --- JUMP HOST (The Public VM) ---
-          proxy_host: ${{ secrets.PROXY_HOST }}
-          proxy_username: ${{ secrets.PROXY_USER }}
-          proxy_key: ${{ secrets.PROXY_KEY }}
+          # --- JUMP HOST (The Public PVE Host) ---
+          proxy_host: ${{ secrets.PROXY_HOST }} # Value: Public IP of PVE
+          proxy_username: ${{ secrets.PROXY_USER }} # Value: sikor (on PVE)
+          proxy_key: ${{ secrets.PROXY_KEY }} # Private Key for PVE
 
           # --- FILES ---
           source: "target/release/${{ env.PROJECT_NAME }}"
@@ -53,8 +53,8 @@ jobs:
           strip_components: 2
           overwrite: true
 
-      # 2. Copy the Site Assets (Tunneling through Proxy)
-      # This sends the .wasm, .js, and .css files
+          # 2. Copy the Site Assets (Tunneling through Proxy)
+          # This sends the .wasm, .js, and .css files
       - name: Copy Site Assets to VPS
         uses: appleboy/scp-action@master
         with:
@@ -71,8 +71,8 @@ jobs:
           strip_components: 1
           overwrite: true
 
-      # 3. Restart the Service (Tunneling through Proxy)
-      # This restarts the app on the private VM
+          # 3. Restart the Service (Tunneling through Proxy)
+          # This restarts the app on the private VM
       - name: Restart Systemd
         uses: appleboy/ssh-action@master
         with:
