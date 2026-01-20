@@ -7,9 +7,9 @@ pub fn HomePage() -> impl IntoView {
         <div class="max-w-225 mx-auto">
             <div class="relative m-7">
                 <div class="absolute right-0 bottom-0 size-[85%] bg-(--bg-sec) -z-100"></div>
-                <div class="-z-10 mask-t-from-0% mask-b-to-100% bg-[url(/assets/images/luiza_bnner.avif)] bg-contain bg-no-repeat">
+                <div class="-z-10 mask-t-from-0% mask-b-to-100% bg-[url(/assets/images/luiza_bnner.webp)] bg-contain bg-no-repeat">
                     <picture>
-                        <source srcset="/assets/images/luiza_bnner.avif" type="image/avif" />
+                        <source srcset="/assets/images/luiza_bnner.webp" type="image/webp" />
                         <img
                             src="/assets/images/luiza_bnner.png"
                             alt="Luiza"
@@ -19,7 +19,7 @@ pub fn HomePage() -> impl IntoView {
                     </picture>
                 </div>
                 <picture>
-                    <source srcset="/assets/images/luiza_bnner.avif" type="image/avif" />
+                    <source srcset="/assets/images/luiza_bnner.webp" type="image/webp" />
                     <img
                         src="/assets/images/luiza_bnner.png"
                         alt="Luiza"
@@ -50,7 +50,7 @@ pub fn HomePage() -> impl IntoView {
                     <b>"brand into legacy."</b>
                 </p>
                 <img
-                    src="/assets/images/kobiety_przy_swiecy.avif"
+                    src="/assets/images/kobiety_przy_swiecy.webp"
                     alt="Happy womans"
                     loading="lazy"
                     class="w-full h-auto row-start-1 row-end-1 col-start-1 col-end-1 opacity-20 object-fill"
@@ -58,7 +58,7 @@ pub fn HomePage() -> impl IntoView {
             </div>
         </div>
         <TagButton bname="1h MASTERCLASS" />
-        <div class="bg-[url(/assets/images/taniec_kobieta.avif)] bg-no-repeat bg-cover">
+        <div class="bg-[url(/assets/images/taniec_kobieta.webp)] bg-no-repeat bg-cover">
             <div class="bg-white/80 text-xl">
                 <div class="text-right pt-5 pr-2">
                     <p class="pt-3 mr-12">
@@ -73,13 +73,13 @@ pub fn HomePage() -> impl IntoView {
                 <div class="grid grid-cols-2 content-center mx-2">
                     <div class="place-self-center">
                     <p class="text-xs text-center bg-white rounded-3xl m-1">"1h MASTERCLASS"</p>
-                        <img class="h-32" src="../../assets/images/monitorek.avif" loading="lazy" alt=""/>
+                        <img class="h-32" src="../../assets/images/monitorek.webp" loading="lazy" alt=""/>
                     </div>
                     <div class="place-self-center">
                         <div class="h-full flex items-center">
-                            <img class="max-w-8 mr-0.5" src="../../assets/images/button_deco.avif" loading="lazy" alt=""/>
+                            <img class="max-w-8 mr-0.5" src="../../assets/images/button_deco.webp" loading="lazy" alt=""/>
                             <button class="text-nowrap text-[1rem] bg-white h-auto rounded-3xl p-2 shadow-2xl ">"Let's go WILD!"</button>
-                            <img class="scale-x-[-1] max-w-8 ml-0.5" src="../../assets/images/button_deco.avif" loading="lazy" alt=""/>
+                            <img class="scale-x-[-1] max-w-8 ml-0.5" src="../../assets/images/button_deco.webp" loading="lazy" alt=""/>
                         </div>
                     </div>
                 </div>
@@ -89,24 +89,24 @@ pub fn HomePage() -> impl IntoView {
             <p class="py-8 text-center font-gistesy md:text-5xl text-[8vw] text-nowrap">"You’re freaking magnetic and you know it."</p>
         </div>
         <TagButton bname="FREE GUIDE" />
-        <div class="bg-[url(/assets/images/pokoj.avif)] bg-center bg-no-repeat bg-cover ">
+        <div class="bg-[url(/assets/images/pokoj.webp)] bg-center bg-no-repeat bg-cover ">
         <div class="grid grid-cols-2 py-10 bg-white/80">
                 <div class="place-self-center pl-2 w-[90%]">
                         <NewsForm/>
                 </div>
                 <div class="pt-3 pr-2">
-                    <img src="/assets/images/monitorki.avif" loading="lazy" alt=""/>
+                    <img src="/assets/images/monitorki.webp" loading="lazy" alt=""/>
                 </div>
             </div>
         </div>
         <div class="pt-8">
             <div class="h-8 bg-(--bg-sec)"> </div>
         </div>
-        <div class="space-y-10 bg-[url(/assets/images/liscie_o2.avif)] bg-center py-10">
+        <div class="space-y-10 bg-[url(/assets/images/liscie_o2.webp)] bg-center py-10">
             <h3 class="text-[5vw] md:text-3xl text-center">"Meet Luiza - the soul behind the"
             <br/>
             <span class="font-gistesy text-[7vw] md:text-4xl text-nowrap">"Wildly Magnetic"</span></h3>
-            <img class="w-[65%] mx-auto" src="../../assets/images/luiza_w_marynarce3.avif" loading="lazy" alt=""/>
+            <img class="w-[65%] mx-auto" src="../../assets/images/luiza_w_marynarce3.webp" loading="lazy" alt=""/>
             <p class="px-[10%] text-justify">
                 "A woman who didn’t find herself in perfection, but in the mess of real life — in exhaustion, in starting over, in choosing herself again and again. She carries the depth, yes, but also the earth — the late nights, the quiet rebuild, the courage to walk away from a life that drained her."
             </p>
@@ -147,7 +147,7 @@ pub fn HomePage() -> impl IntoView {
             <img class="absolute  w-auto h-[60%] bottom-0 right-0 z-0" src="../../assets/images/kobieta_i_swieca_2_3_luiza.webp" loading="lazy" alt="Woman and candle"/>
         </div>
         <div class="bg-(--bg-sec)">
-        <div class="space-y-6 py-10 px-[10%] bg-[url(../../assets/images/liscie_o2.avif)] bg-center bg-size-[200%] bg-no-repeat">
+        <div class="space-y-6 py-10 px-[10%] bg-[url(../../assets/images/liscie_o2.webp)] bg-center bg-size-[200%] bg-no-repeat">
             <p class="font-gistesy text-[7vw] md:text-4xl">"There’s a fire in you..."</p>
             <p class="font-gistesy text-[7vw] md:text-4xl text-center">"Let’s turn it into pure wild magnetism."</p>
             <div class="flex justify-center">
