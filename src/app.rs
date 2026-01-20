@@ -17,6 +17,8 @@ pub fn App() -> impl IntoView {
         <Link rel="preload" href="/assets/fonts/gistesy/Gistesy.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
         <Link rel="preload" href="/assets/fonts/libre_baskerville/LibreBaskerville-Regular.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
         <Link rel="preload" href="/assets/images/luiza_bnner.webp" as_="image" type_="image/webp" />
+        <Link rel="preload" href="/assets/fonts/libre_baskerville/LibreBaskerville-Bold.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
+        <Link rel="preload" href="/assets/fonts/libre_baskerville/LibreBaskerville-Italic.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pkg/wmw.css" />
