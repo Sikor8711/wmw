@@ -122,7 +122,7 @@ pub fn HomePage() -> impl IntoView {
                 <p class="font-gistesy text-[6vw] md:text-4xl">"Let’s get you there."</p>
             </div>
             <div class="flex justify-center">
-                <button class="text-nowrap text-xl bg-(--bg-rose) h-auto rounded-full p-4 shadow-2xl ">"Activate My Wild Potential!"</button>
+                <button class="text-nowrap text-(--bg-darker) text-xl bg-(--bg-rose) h-auto rounded-full p-4 shadow-2xl ">"Activate My Wild Potential!"</button>
             </div>
 
         </div>

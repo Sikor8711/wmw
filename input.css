@@ -14,15 +14,42 @@
   font-weight: 200;
   font-style: normal;
   font-display: swap;
-  src: url("/assets/fonts/gistesy/Gistesy.ttf") format("truetype");
+  src:
+    url("/assets/fonts/gistesy/Gistesy.woff2") format("woff2"),
+    url("/assets/fonts/gistesy/Gistesy.ttf") format("truetype");
 }
 @font-face {
   font-family: "LibreBaskerville";
   font-weight: 200;
   font-style: normal;
   font-display: swap;
-  src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Regular.ttf")
-    format("truetype");
+  src:
+    url("/assets/fonts/libre_baskerville/LibreBaskerville-Regular.woff2")
+      format("woff2"),
+    url("/assets/fonts/libre_baskerville/LibreBaskerville-Regular.ttf")
+      format("truetype");
+}
+@font-face {
+  font-family: "LibreBaskerville";
+  font-weight: bold;
+  font-style: bold;
+  font-display: swap;
+  src:
+    url("/assets/fonts/libre_baskerville/LibreBaskerville-Bold.woff2")
+      format("woff2"),
+    url("/assets/fonts/libre_baskerville/LibreBaskerville-Bold.ttf")
+      format("truetype");
+}
+@font-face {
+  font-family: "LibreBaskerville";
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+  src:
+    url("/assets/fonts/libre_baskerville/LibreBaskerville-Italic.woff2")
+      format("woff2"),
+    url("/assets/fonts/libre_baskerville/LibreBaskerville-Italic.ttf")
+      format("truetype");
 }
 .Layout-wrapper {
   margin: 0px;
