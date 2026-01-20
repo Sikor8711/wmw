@@ -10,7 +10,6 @@ pub fn HomePage() -> impl IntoView {
                 <div class="-z-10 mask-t-from-0% mask-b-to-100% bg-[url(/assets/images/luiza_bnner.webp)] bg-contain bg-no-repeat">
                     <picture>
                         <source src="/assets/images/luiza_bnner.webp" />
-                        <source src="/assets/images/luiza_bnner.avif" />
                     <img
                         src="/assets/images/luiza_bnner.webp"
                         widht="800"
@@ -24,7 +23,6 @@ pub fn HomePage() -> impl IntoView {
                 </div>
                 <picture>
                     <source src="/assets/images/luiza_bnner.webp" />
-                    <source src="/assets/images/luiza_bnner.avif" />
                     <img
                         src="/assets/images/luiza_bnner.webp"
                         widht="800"
