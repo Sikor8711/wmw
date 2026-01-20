@@ -42,14 +42,14 @@ pub fn HomePage() -> impl IntoView {
                     <b>"brand into legacy."</b>
                 </p>
                 <img
-                    src="/assets/images/kobiety_przy_swiecy.png"
+                    src="/assets/images/kobiety_przy_swiecy.avif"
                     alt="Happy womans"
                     class="w-full h-auto row-start-1 row-end-1 col-start-1 col-end-1 opacity-20 object-fill"
                 />
             </div>
         </div>
         <TagButton bname="1h MASTERCLASS" />
-        <div class="bg-[url(/assets/images/taniec_kobieta.png)] bg-no-repeat bg-cover">
+        <div class="bg-[url(/assets/images/taniec_kobieta.avif)] bg-no-repeat bg-cover">
             <div class="bg-white/80 text-xl">
                 <div class="text-right pt-5 pr-2">
                     <p class="pt-3 mr-12">
@@ -68,9 +68,9 @@ pub fn HomePage() -> impl IntoView {
                     </div>
                     <div class="place-self-center">
                         <div class="h-full flex items-center">
-                            <img class="max-w-8 mr-0.5" src="../../assets/images/button_deco.png" alt=""/>
+                            <img class="max-w-8 mr-0.5" src="../../assets/images/button_deco.avif" alt=""/>
                             <button class="text-nowrap text-[1rem] bg-white h-auto rounded-3xl p-2 shadow-2xl ">"Let's go WILD!"</button>
-                            <img class="scale-x-[-1] max-w-8 ml-0.5" src="../../assets/images/button_deco.png" alt=""/>
+                            <img class="scale-x-[-1] max-w-8 ml-0.5" src="../../assets/images/button_deco.avif" alt=""/>
                         </div>
                     </div>
                 </div>
@@ -80,13 +80,13 @@ pub fn HomePage() -> impl IntoView {
             <p class="py-8 text-center font-gistesy md:text-5xl text-[8vw] text-nowrap">"You’re freaking magnetic and you know it."</p>
         </div>
         <TagButton bname="FREE GUIDE" />
-        <div class="bg-[url(/assets/images/pokoj.png)] bg-center bg-no-repeat bg-cover ">
+        <div class="bg-[url(/assets/images/pokoj.avif)] bg-center bg-no-repeat bg-cover ">
         <div class="grid grid-cols-2 py-10 bg-white/80">
                 <div class="place-self-center pl-2 w-[90%]">
                         <NewsForm/>
                 </div>
                 <div class="pt-3 pr-2">
-                    <img src="/assets/images/monitorki.png" alt=""/>
+                    <img src="/assets/images/monitorki.avif" alt=""/>
                 </div>
             </div>
         </div>
