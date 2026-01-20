@@ -48,7 +48,7 @@ pub fn NewsForm() -> impl IntoView {
                     <input required class="border w-full p-1" type="email" placeholder="Email"
                         node_ref=email_ref
                     />
-                    <button type="submint" class="w-full text-center text-xs text-(--bg-darker) text-nowrap p-2 bg-(--bg-rose)">"DIVE INTO FREE GUIDE"</button>
+                    <button type="submint" class="w-full text-center text-xs text-black text-nowrap p-2 bg-(--bg-rose)">"DIVE INTO FREE GUIDE"</button>
                 </form>
             }.into_any()
         }}
