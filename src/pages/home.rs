@@ -9,22 +9,24 @@ pub fn HomePage() -> impl IntoView {
                 <div class="absolute right-0 bottom-0 size-[85%] bg-(--bg-sec) -z-100"></div>
                 <div class="-z-10 mask-t-from-0% mask-b-to-100% bg-[url(/assets/images/luiza_bnner.webp)] bg-contain bg-no-repeat">
                     <picture>
-                        <source src="luiza_bnner.webp" type="image/webp" />
-                        <img
-                            src="luiza_bnner.webp"
-                            widht="800"
-                            height="600"
-                            fetchprority="high"
-                            alt="Luiza"
-                            decoding="async"
-                            class="-z-10 max-w-[80%]"
-                        />
+                        <source src="/assets/images/luiza_bnner.webp" />
+                        <source src="/assets/images/luiza_bnner.avif" />
+                    <img
+                        src="/assets/images/luiza_bnner.png"
+                        widht="800"
+                        height="600"
+                        fetchprority="high"
+                        alt="Luiza"
+                        decoding="async"
+                        class="-z-10 max-w-[80%]"
+                    />
                     </picture>
                 </div>
                 <picture>
-                    <source src="luiza_bnner.webp" type="image/webp" />
+                    <source src="/assets/images/luiza_bnner.webp" />
+                    <source src="/assets/images/luiza_bnner.avif" />
                     <img
-                        src="luiza_bnner.webp"
+                        src="/assets/images/luiza_bnner.png"
                         widht="800"
                         height="600"
                         fetchprority="high"
