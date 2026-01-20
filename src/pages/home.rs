@@ -8,25 +8,31 @@ pub fn HomePage() -> impl IntoView {
             <div class="relative m-7">
                 <div class="absolute right-0 bottom-0 size-[85%] bg-(--bg-sec) -z-100"></div>
                 <div class="-z-10 mask-t-from-0% mask-b-to-100% bg-[url(/assets/images/luiza_bnner.webp)] bg-contain bg-no-repeat">
+                    <picture>
+                        <source src="luiza_bnner.webp" type="image/webp" />
+                        <img
+                            src="luiza_bnner.webp"
+                            widht="800"
+                            height="600"
+                            fetchprority="high"
+                            alt="Luiza"
+                            decoding="async"
+                            class="-z-10 max-w-[80%]"
+                        />
+                    </picture>
+                </div>
+                <picture>
+                    <source src="luiza_bnner.webp" type="image/webp" />
                     <img
-                        src="/assets/images/luiza_bnner.webp"
+                        src="luiza_bnner.webp"
                         widht="800"
                         height="600"
                         fetchprority="high"
                         alt="Luiza"
                         decoding="async"
-                        class="-z-10 max-w-[80%]"
+                        class="absolute top-0 left-0 max-w-[80%] opacity-80 brightness-110"
                     />
-                </div>
-                <img
-                    src="/assets/images/luiza_bnner.webp"
-                    decoding="async"
-                    widht="800"
-                    height="600"
-                    fetchprority="high"
-                    alt="Luiza"
-                    class="absolute top-0 left-0 max-w-[80%] opacity-80 brightness-110"
-                />
+                </picture>
                 <div class="-translate-x-4 -translate-y-2 z-100 font-gistesy -rotate-8 atext md:text-8xl text-nowrap">
                     <h1 class="opacity-50 z-100 text-center">
                         "Wild hearts don’t follow rules."
