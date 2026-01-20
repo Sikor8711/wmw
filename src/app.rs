@@ -14,13 +14,13 @@ pub fn App() -> impl IntoView {
     provide_meta_context();
 
     view! {
+        <Link rel="preload" href="/assets/fonts/gistesy/Gistesy.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pkg/wmw.css" />
 
         // sets the document title
         <Title text="Wildly Magnetic" />
-        <Link rel="preload" href="/assets/fonts/gistesy/Gistesy.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
 
 
         // content for this welcome page
