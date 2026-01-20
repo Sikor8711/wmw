@@ -2,7 +2,7 @@ use crate::components::layout::MainLayout;
 use crate::pages::about::AboutPage;
 use crate::pages::home::HomePage;
 use leptos::prelude::*;
-use leptos_meta::{provide_meta_context, Stylesheet, Title};
+use leptos_meta::*;
 use leptos_router::{
     components::{ParentRoute, Route, Router, Routes},
     StaticSegment, WildcardSegment,
@@ -20,6 +20,8 @@ pub fn App() -> impl IntoView {
 
         // sets the document title
         <Title text="Wildly Magnetic" />
+        <Link rel="preload" href="/assets/fonts/gistesy/Gistesy.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
+
 
         // content for this welcome page
         <Router>
@@ -36,7 +38,7 @@ pub fn App() -> impl IntoView {
     }
 }
 
-/// 404 - Not Found
+/// 404 - Not Founattr:d
 #[component]
 fn NotFound() -> impl IntoView {
     // set an HTTP status code 404
