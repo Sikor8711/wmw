@@ -4,7 +4,7 @@ use crate::pages::home::HomePage;
 use leptos::prelude::*;
 use leptos_meta::{provide_meta_context, Stylesheet, Title};
 use leptos_router::{
-    components::{Route, Router, Routes, ParentRoute},
+    components::{ParentRoute, Route, Router, Routes},
     StaticSegment, WildcardSegment,
 };
 
@@ -19,7 +19,7 @@ pub fn App() -> impl IntoView {
         <Stylesheet id="leptos" href="/pkg/wmw.css" />
 
         // sets the document title
-        <Title text="Welcome to Leptos" />
+        <Title text="Wildly Magnetic" />
 
         // content for this welcome page
         <Router>

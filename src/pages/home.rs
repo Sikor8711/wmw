@@ -8,17 +8,25 @@ pub fn HomePage() -> impl IntoView {
             <div class="relative m-7">
                 <div class="absolute right-0 bottom-0 size-[85%] bg-(--bg-sec) -z-100"></div>
                 <div class="-z-10 mask-t-from-0% mask-b-to-100% bg-[url(/assets/images/luiza_bnner.avif)] bg-contain bg-no-repeat">
-                    <img
-                        src="/assets/images/luiza_bnner.avif"
-                        alt="Luiza"
-                        class="-z-10 max-w-[80%]"
-                    />
+                    <picture>
+                        <source srcset="/assets/images/luiza_bnner.avif" type="image/avif" />
+                        <img
+                            src="/assets/images/luiza_bnner.png"
+                            alt="Luiza"
+                            decoding="async"
+                            class="-z-10 max-w-[80%]"
+                        />
+                    </picture>
                 </div>
-                <img
-                    src="/assets/images/luiza_bnner.avif"
-                    alt="Luiza"
-                    class="absolute top-0 left-0 max-w-[80%] opacity-80 brightness-110"
-                />
+                <picture>
+                    <source srcset="/assets/images/luiza_bnner.avif" type="image/avif" />
+                    <img
+                        src="/assets/images/luiza_bnner.png"
+                        alt="Luiza"
+                        decoding="async"
+                        class="absolute top-0 left-0 max-w-[80%] opacity-80 brightness-110"
+                    />
+                </picture>
                 <div class="-translate-x-4 -translate-y-2 z-100 font-gistesy -rotate-8 atext md:text-8xl text-nowrap">
                     <h1 class="opacity-50 z-100 text-center">
                         "Wild hearts don’t follow rules."
@@ -44,6 +52,7 @@ pub fn HomePage() -> impl IntoView {
                 <img
                     src="/assets/images/kobiety_przy_swiecy.avif"
                     alt="Happy womans"
+                    loading="lazy"
                     class="w-full h-auto row-start-1 row-end-1 col-start-1 col-end-1 opacity-20 object-fill"
                 />
             </div>
@@ -64,13 +73,13 @@ pub fn HomePage() -> impl IntoView {
                 <div class="grid grid-cols-2 content-center mx-2">
                     <div class="place-self-center">
                     <p class="text-xs text-center bg-white rounded-3xl m-1">"1h MASTERCLASS"</p>
-                        <img class="h-32" src="../../assets/images/monitorek.avif" alt=""/>
+                        <img class="h-32" src="../../assets/images/monitorek.avif" loading="lazy" alt=""/>
                     </div>
                     <div class="place-self-center">
                         <div class="h-full flex items-center">
-                            <img class="max-w-8 mr-0.5" src="../../assets/images/button_deco.avif" alt=""/>
+                            <img class="max-w-8 mr-0.5" src="../../assets/images/button_deco.avif" loading="lazy" alt=""/>
                             <button class="text-nowrap text-[1rem] bg-white h-auto rounded-3xl p-2 shadow-2xl ">"Let's go WILD!"</button>
-                            <img class="scale-x-[-1] max-w-8 ml-0.5" src="../../assets/images/button_deco.avif" alt=""/>
+                            <img class="scale-x-[-1] max-w-8 ml-0.5" src="../../assets/images/button_deco.avif" loading="lazy" alt=""/>
                         </div>
                     </div>
                 </div>
@@ -86,7 +95,7 @@ pub fn HomePage() -> impl IntoView {
                         <NewsForm/>
                 </div>
                 <div class="pt-3 pr-2">
-                    <img src="/assets/images/monitorki.avif" alt=""/>
+                    <img src="/assets/images/monitorki.avif" loading="lazy" alt=""/>
                 </div>
             </div>
         </div>
@@ -97,7 +106,7 @@ pub fn HomePage() -> impl IntoView {
             <h3 class="text-[5vw] md:text-3xl text-center">"Meet Luiza - the soul behind the"
             <br/>
             <span class="font-gistesy text-[7vw] md:text-4xl text-nowrap">"Wildly Magnetic"</span></h3>
-            <img class="w-[65%] mx-auto" src="../../assets/images/luiza_w_marynarce3.avif" alt=""/>
+            <img class="w-[65%] mx-auto" src="../../assets/images/luiza_w_marynarce3.avif" loading="lazy" alt=""/>
             <p class="px-[10%] text-justify">
                 "A woman who didn’t find herself in perfection, but in the mess of real life — in exhaustion, in starting over, in choosing herself again and again. She carries the depth, yes, but also the earth — the late nights, the quiet rebuild, the courage to walk away from a life that drained her."
             </p>
@@ -135,7 +144,7 @@ pub fn HomePage() -> impl IntoView {
                 </p>
                 <p class="text-justify">" Welcome home."</p>
             </div>
-            <img class="absolute  w-auto h-[60%] bottom-0 right-0 z-0" src="../../assets/images/kobieta_i_swieca_2_3_luiza.webp" alt="Woman and candle"/>
+            <img class="absolute  w-auto h-[60%] bottom-0 right-0 z-0" src="../../assets/images/kobieta_i_swieca_2_3_luiza.webp" loading="lazy" alt="Woman and candle"/>
         </div>
         <div class="bg-(--bg-sec)">
         <div class="space-y-6 py-10 px-[10%] bg-[url(../../assets/images/liscie_o2.avif)] bg-center bg-size-[200%] bg-no-repeat">
