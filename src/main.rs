@@ -36,6 +36,7 @@ async fn main() -> std::io::Result<()> {
             .service(favicon)
             .leptos_routes(routes, {
                 let leptos_options = leptos_options.clone();
+                let css = css.clone();
                 move || {
                 let css = css.clone();
                     view! {
@@ -48,7 +49,7 @@ async fn main() -> std::io::Result<()> {
                                 <HydrationScripts options=leptos_options.clone()/>
                                 <MetaTags/>
                                 <style>
-                                    {css} 
+                                    {css}
                                 </style>
                             </head>
                             <body>
@@ -59,7 +60,7 @@ async fn main() -> std::io::Result<()> {
                 }
             })
             .app_data(web::Data::new(leptos_options.to_owned()))
-        //.wrap(middleware::Compress::default())
+        .wrap(middleware::Compress::default())
     })
     .bind(&addr)?
     .run()
