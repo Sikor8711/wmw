@@ -135,7 +135,7 @@ pub fn HomePage() -> impl IntoView {
                 </p>
                 <p class="text-justify">" Welcome home."</p>
             </div>
-            <img class="absolute  w-auto h-[60%] bottom-0 right-0 z-0" src="../../assets/images/kobieta_i_swieca_2_3.avif" alt="Woman and candle"/>
+            <img class="absolute  w-auto h-[60%] bottom-0 right-0 z-0" src="../../assets/images/kobieta_i_swieca_2_3_luiza.webp" alt="Woman and candle"/>
         </div>
         <div class="bg-(--bg-sec)">
         <div class="space-y-6 py-10 px-[10%] bg-[url(../../assets/images/liscie_o2.png)] bg-center bg-size-[200%] bg-no-repeat">
@@ -145,7 +145,6 @@ pub fn HomePage() -> impl IntoView {
                 <button class="text-nowrap text-xl bg-(--bg-rose) h-auto rounded-full p-4 shadow-2xl ">"I'm So Ready to Rise!"</button>
             </div>
         </div>
-            <div>"hej"</div>
         </div>
     }
 }
