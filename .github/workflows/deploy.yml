@@ -16,17 +16,20 @@ jobs:
         uses: actions/checkout@v4
 
       # --- BUILD SECTION ---
+
       - name: Install Rust Nightly
         uses: dtolnay/rust-toolchain@nightly
         with:
           targets: wasm32-unknown-unknown
 
+      # 1. Install Binstall (Needed to install cargo-leptos fast)
       - name: Install cargo-binstall
         run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
 
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
 
+      # 2. INSTALL LEPTOS (This was missing in your failed run!)
       - name: Install cargo-leptos
         run: cargo binstall cargo-leptos -y --force
 
@@ -35,12 +38,12 @@ jobs:
 
       # --- DEPLOY SECTION ---
 
-      # 1. TRUST KEYS (Prevents "Host Key Verification Failed")
       - name: Trust Server Keys
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.PROXY_HOST }} >> ~/.ssh/known_hosts
-      # 2. UPLOAD BINARY (To /tmp - Safe & Fast)
+
+      # 3. Upload Binary
       - name: Upload Binary to Temp
         uses: appleboy/scp-action@master
         with:
@@ -50,13 +53,12 @@ jobs:
           proxy_host: ${{ secrets.PROXY_HOST }}
           proxy_username: ${{ secrets.PROXY_USER }}
           proxy_key: ${{ secrets.PROXY_KEY }}
-
           source: "target/release/${{ env.PROJECT_NAME }}"
           target: "/tmp"
           strip_components: 2
           overwrite: true
 
-      # 3. UPLOAD ASSETS (To /tmp - Safe & Fast)
+      # 4. Upload Assets
       - name: Upload Assets to Temp
         uses: appleboy/scp-action@master
         with:
@@ -66,13 +68,12 @@ jobs:
           proxy_host: ${{ secrets.PROXY_HOST }}
           proxy_username: ${{ secrets.PROXY_USER }}
           proxy_key: ${{ secrets.PROXY_KEY }}
-
           source: "target/site"
           target: "/tmp/leptos_site"
           strip_components: 1
           overwrite: true
 
-      # 4. EXECUTE SECURE DEPLOY SCRIPT
+      # 5. Execute Deploy Script
       - name: Run Deploy Script
         uses: appleboy/ssh-action@master
         with:
@@ -83,6 +84,4 @@ jobs:
           proxy_username: ${{ secrets.PROXY_USER }}
           proxy_key: ${{ secrets.PROXY_KEY }}
           proxy_strict: false
-
-          # This runs the specific script we authorized in sudoers
           script: sudo /usr/local/bin/deploy_wmw.sh
