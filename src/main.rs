@@ -12,12 +12,18 @@ async fn main() -> std::io::Result<()> {
 
     let conf = get_configuration(None).unwrap();
     let addr = conf.leptos_options.site_addr;
+    let leptos_options = conf.leptos_options.clone();
+    let site_root = &leptos_options.site_root;
+    let css_content = std::fs::read_to_string(format!("{site_root}/pkg/wmw.css"))
+        .unwrap_or_else(|_| "".to_string());
 
     HttpServer::new(move || {
         // Generate the list of routes in your Leptos App
         let routes = generate_route_list(App);
         let leptos_options = &conf.leptos_options;
         let site_root = leptos_options.site_root.clone().to_string();
+
+        let css = css_content.clone();
 
         println!("listening on http://{}", &addr);
 
@@ -31,6 +37,7 @@ async fn main() -> std::io::Result<()> {
             .leptos_routes(routes, {
                 let leptos_options = leptos_options.clone();
                 move || {
+                let css = css.clone();
                     view! {
                         <!DOCTYPE html>
                         <html lang="en">
@@ -40,6 +47,9 @@ async fn main() -> std::io::Result<()> {
                                 <AutoReload options=leptos_options.clone() />
                                 <HydrationScripts options=leptos_options.clone()/>
                                 <MetaTags/>
+                                <style>
+                                    {css} 
+                                </style>
                             </head>
                             <body>
                                 <App/>
