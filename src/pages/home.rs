@@ -138,7 +138,7 @@ pub fn HomePage() -> impl IntoView {
             <img class="absolute  w-auto h-[60%] bottom-0 right-0 z-0" src="../../assets/images/kobieta_i_swieca_2_3_luiza.webp" alt="Woman and candle"/>
         </div>
         <div class="bg-(--bg-sec)">
-        <div class="space-y-6 py-10 px-[10%] bg-[url(../../assets/images/liscie_o2.png)] bg-center bg-size-[200%] bg-no-repeat">
+        <div class="space-y-6 py-10 px-[10%] bg-[url(../../assets/images/liscie_o2.avif)] bg-center bg-size-[200%] bg-no-repeat">
             <p class="font-gistesy text-[7vw] md:text-4xl">"There’s a fire in you..."</p>
             <p class="font-gistesy text-[7vw] md:text-4xl text-center">"Let’s turn it into pure wild magnetism."</p>
             <div class="flex justify-center">
