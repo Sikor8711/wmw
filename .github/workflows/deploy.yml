@@ -28,7 +28,7 @@ jobs:
         uses: Swatinem/rust-cache@v2
 
       - name: Install cargo-leptos
-        run: cargo binstall cargo-leptos -y
+        run: cargo binstall cargo-leptos -y --force
 
       - name: Build Release
         run: cargo leptos build --release
