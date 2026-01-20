@@ -12,7 +12,7 @@ pub fn HomePage() -> impl IntoView {
                         <source src="/assets/images/luiza_bnner.webp" />
                         <source src="/assets/images/luiza_bnner.avif" />
                     <img
-                        src="/assets/images/luiza_bnner.png"
+                        src="/assets/images/luiza_bnner.webp"
                         widht="800"
                         height="600"
                         fetchprority="high"
@@ -26,7 +26,7 @@ pub fn HomePage() -> impl IntoView {
                     <source src="/assets/images/luiza_bnner.webp" />
                     <source src="/assets/images/luiza_bnner.avif" />
                     <img
-                        src="/assets/images/luiza_bnner.png"
+                        src="/assets/images/luiza_bnner.webp"
                         widht="800"
                         height="600"
                         fetchprority="high"
