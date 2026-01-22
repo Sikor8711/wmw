@@ -31,7 +31,7 @@ pub fn Footer() -> impl IntoView {
                             <p>"Contact us:"</p>
                         </div>
                     </div>
-                        <a href="mail:info@wildlymagnetic.co">"info@wildlymagnetic.co"</a>
+                    <a href="mail:info@wildlymagnetic.co">"info@wildlymagnetic.co"</a>
                 </div>
                 <div class="space-y-2 pb-3">
                     <p class="text-[1rem] pb-5">
@@ -46,6 +46,8 @@ pub fn Footer() -> impl IntoView {
                     </form>
                 </div>
             </div>
+        </div>
+        <div class="bg-(--bg-darker) text-sm text-white relative">
             <div class="pt-5 py-4 flex justify-center gap-3 text-[0.8rem]">
                 <a href="/terms-of-use">"Terms of use"</a>
                 <a href="/privacy-policy">"Privacy Policy"</a>
@@ -55,7 +57,23 @@ pub fn Footer() -> impl IntoView {
                 <p class="font-gistesy text-[0.8rem]">" Wildly Magnetic"</p>
                 <p>"All right reserve"</p>
             </div>
-                <p class="flex justify-center text-[0.4rem] pt-2">"Power by Sikormedia"</p>
+            <p class="flex justify-center text-[0.4rem] pt-2">"Power by Sikormedia"</p>
+            <div class="absolute top-0 right-0 z-100 ">
+                <div class="flex max-w-1/4 items-end pr-2 gap-2">
+                    <img src="/assets/images/coffee.webp" alt="Coffee mug" class="h-10"/>
+                    <div>
+                        <p class="">"BUY ME"</p>
+                        <p class="">"COFFEE"</p>
+                    </div>
+                </div>
+                <div class="flex justify-center items-center gap-2 pr-2">
+                    <p class="font-gistesy text-lg pt-1">"Thank you"</p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 128 128">
+                        <path fill="#db0a28" d="M64.8 120.71c3.68 0 32.11-24.18 48.7-44.07c15.96-19.14 10.2-41.74 6.69-48.03c-4.15-7.43-56.94 17.01-56.94 17.01S14.07 17.99 10.39 23.99C5.4 32.13-1.59 53.54 12.52 73.45C27.5 94.6 60.85 120.71 64.8 120.71" />
+                        <path fill="#ff262e" d="M64.55 114.2s52.26-38.68 56.75-62.3c4.25-22.37-4.45-33.22-15.16-38.45C78.99.19 65.29 26.21 64 26.21S49.95.14 23.7 11.42C9.24 17.63 3.18 34.53 8.91 53.57c8.41 27.94 55.64 60.63 55.64 60.63" />
+                    </svg>
+                </div>
+            </div>
         </div>
     }
 }
