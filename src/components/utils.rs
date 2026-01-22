@@ -39,16 +39,16 @@ pub fn NewsForm() -> impl IntoView {
                 </div>
             }.into_any(),
             None => view! {
-                <h2 class="text-[1rem] pb-3 text-center">"The Magnetic Message"</h2>
-                <p class="text-[0.8rem] text-center">"A soulful guide to finding the message that your dream clients can feel — and can’t resist."</p>
-                <form on:submit=on_submit class="text-xs mx-auto space-y-3 pt-3">
+                <h2 class="text-[1.2rem] pb-3 text-center">"The Magnetic Message"</h2>
+                <p class="text-[1rem] text-center">"A soulful guide to finding the message that your dream clients can feel — and can’t resist."</p>
+                <form on:submit=on_submit class="mx-auto space-y-3 pt-3">
                     <input required class="border w-full p-1" type="text" placeholder="First name"
                         node_ref=first_name_ref
                     />
                     <input required class="border w-full p-1" type="email" placeholder="Email"
                         node_ref=email_ref
                     />
-                    <button type="submint" class="w-full text-center text-xs text-black text-nowrap p-2 bg-(--bg-rose)">"DIVE INTO FREE GUIDE"</button>
+                    <button type="submint" class="w-full text-center text-black text-nowrap p-2 bg-(--bg-rose)">"DIVE INTO FREE GUIDE"</button>
                 </form>
             }.into_any()
         }}

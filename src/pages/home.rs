@@ -96,12 +96,9 @@ pub fn HomePage() -> impl IntoView {
         </div>
         <TagButton bname="FREE GUIDE" />
         <div class="bg-[url(/assets/images/pokoj.webp)] bg-center bg-no-repeat bg-cover ">
-        <div class="grid grid-cols-2 py-10 bg-white/80">
-                <div class="place-self-center pl-2 w-[90%]">
+        <div class="py-10 bg-white/80">
+                <div class="place-self-center pl-2 max-w-75">
                         <NewsForm/>
-                </div>
-                <div class="pt-3 pr-2">
-                    <img src="/assets/images/monitorki.webp" loading="lazy" alt=""/>
                 </div>
             </div>
         </div>
