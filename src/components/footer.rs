@@ -4,12 +4,12 @@ use leptos::prelude::*;
 pub fn Footer() -> impl IntoView {
     let dt = Utc::now();
     view! {
-        <div class="bg-(--bg-darker) text-sm text-white py-5 px-[10%]">
+        <div class="bg-(--bg-darker) text-sm text-white py-5 px-5">
             <div class="grid gap-5 grid-cols-1 sm:grid-cols-2 place-items-center text-center">
                 <div class="space-y-4 pt-3">
-                    <p class="pr-1 font-gistesy text-2xl">"Wildly Magnetic"</p>
-                    <p>Follow us on:</p>
-                    <div class="flex gap-10">
+                    <p class="pr-1 font-gistesy text-5xl">"Wildly Magnetic"</p>
+                    <div class="flex gap-5 justify-center items-center">
+                        <p>Follow us on:</p>
                         <a href="/about" target="_blank" class="mr-0 ml-auto">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                                 <path fill="#fff" d="M32 16c0-8.839-7.167-16-16-16C7.161 0 0 7.161 0 16c0 7.984 5.849 14.604 13.5 15.803V20.626H9.437v-4.625H13.5v-3.527c0-4.009 2.385-6.223 6.041-6.223c1.751 0 3.584.312 3.584.312V10.5h-2.021c-1.984 0-2.604 1.235-2.604 2.5v3h4.437l-.713 4.625H18.5v11.177C26.145 30.603 32 23.983 32 15.999z" />
@@ -28,16 +28,15 @@ pub fn Footer() -> impl IntoView {
                                 <path fill="#fff" d="M11.833 8.5c.505 0 .963.167 1.336.448a.5.5 0 0 1 .998.052v2.833c0 .167.06.319.161.436a.5.5 0 1 1-.757.653a2 2 0 0 1-.105-.135a2.23 2.23 0 0 1-1.633.713C10.505 13.5 9.5 12.339 9.5 11s1.005-2.5 2.333-2.5M10.5 11c0 .87.637 1.5 1.333 1.5c.697 0 1.334-.63 1.334-1.5s-.637-1.5-1.334-1.5c-.696 0-1.333.63-1.333 1.5" />
                                 <path fill="#fff" d="M14.809 4.166c-.98-.612-1.852-.976-2.775-.983c-.925-.007-1.82.343-2.843.983l-3.2 2c-.907.567-1.55 1.146-1.955 1.886c-.403.739-.536 1.58-.536 2.608v5.562c0 .822 0 1.468.043 1.99c.043.53.133.974.338 1.377a3.5 3.5 0 0 0 1.53 1.53c.403.205.847.295 1.378.338c.52.043 1.168.043 1.989.043h6.444c.822 0 1.469 0 1.99-.043c.53-.043.974-.133 1.377-.338a3.5 3.5 0 0 0 1.53-1.53c.205-.403.295-.847.338-1.378c.043-.52.043-1.167.043-1.989V10.66c0-1.028-.133-1.87-.536-2.608c-.404-.74-1.048-1.319-1.955-1.886zm-5.088.848c.95-.594 1.653-.836 2.305-.83c.653.004 1.338.258 2.253.83l3.2 2c.834.521 1.318.988 1.607 1.517c.192.352.312.756.37 1.266l-5.753 4.675c-.722.587-1.227.816-1.68.822c-.45.005-.97-.208-1.726-.822L4.544 9.798c.058-.51.178-.915.37-1.267c.289-.529.773-.996 1.607-1.517zm4.68 10.18L19.5 11.05v5.15c0 .848 0 1.454-.04 1.93c-.038.469-.11.766-.233 1.005a2.5 2.5 0 0 1-.359.526zm-.819.595l4.475 4.475c-.225.1-.508.163-.927.197c-.476.039-1.082.039-1.93.039H8.8c-.848 0-1.455 0-1.93-.04c-.42-.034-.702-.096-.927-.196l4.476-4.476c.54.33 1.066.513 1.617.506c.536-.007 1.04-.194 1.546-.505m-8.45 3.872a2.5 2.5 0 0 1-.36-.526c-.121-.239-.194-.536-.233-1.005c-.039-.476-.039-1.082-.039-1.93v-5.15l5.1 4.144z" />
                             </svg>
-                            <p>"Contact us:"</p>
+                            <a href="mail:info@wildlymagnetic.co">"info@wildlymagnetic.co"</a>
                         </div>
                     </div>
-                    <a href="mail:info@wildlymagnetic.co">"info@wildlymagnetic.co"</a>
                 </div>
-                <div class="space-y-2 pb-3">
-                    <p class="text-[1rem] pb-5">
+                <div class="space-y-2 pb-3 pt-2">
+                    <p class="text-[1rem]">
                         "START YOUR TRANSFORMATION HERE ↓"
                     </p>
-                    <p class="text-justify pb-2">
+                    <p class="text-justify pb-3">
                         "Get wildly magnetic Instagram strategies + empowering business inspiration delivered to your inbox every week."
                     </p>
                     <form class="relative w-full flex justify-end">
@@ -58,22 +57,22 @@ pub fn Footer() -> impl IntoView {
                 <p>"All right reserve"</p>
             </div>
             <p class="flex justify-center text-[0.4rem] pt-2">"Power by Sikormedia"</p>
-            <div class="absolute top-0 right-0 z-100 ">
-                <div class="flex max-w-1/4 items-end pr-2 gap-2">
-                    <img src="/assets/images/coffee.webp" alt="Coffee mug" class="h-10"/>
-                    <div>
-                        <p class="">"BUY ME"</p>
-                        <p class="">"COFFEE"</p>
-                    </div>
-                </div>
-                <div class="flex justify-center items-center gap-2 pr-2">
-                    <p class="font-gistesy text-lg pt-1">"Thank you"</p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 128 128">
-                        <path fill="#db0a28" d="M64.8 120.71c3.68 0 32.11-24.18 48.7-44.07c15.96-19.14 10.2-41.74 6.69-48.03c-4.15-7.43-56.94 17.01-56.94 17.01S14.07 17.99 10.39 23.99C5.4 32.13-1.59 53.54 12.52 73.45C27.5 94.6 60.85 120.71 64.8 120.71" />
-                        <path fill="#ff262e" d="M64.55 114.2s52.26-38.68 56.75-62.3c4.25-22.37-4.45-33.22-15.16-38.45C78.99.19 65.29 26.21 64 26.21S49.95.14 23.7 11.42C9.24 17.63 3.18 34.53 8.91 53.57c8.41 27.94 55.64 60.63 55.64 60.63" />
-                    </svg>
-                </div>
-            </div>
+            // <div class="absolute top-0 right-0 z-100 ">
+            //     <div class="flex max-w-1/4 items-end pr-2 gap-2">
+            //         <img src="/assets/images/coffee.webp" alt="Coffee mug" class="h-10"/>
+            //         <div>
+            //             <p class="">"BUY ME"</p>
+            //             <p class="">"COFFEE"</p>
+            //         </div>
+            //     </div>
+            //     <div class="flex justify-center items-center gap-2 pr-2">
+            //         <p class="font-gistesy text-lg pt-1">"Thank you"</p>
+            //         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 128 128">
+            //             <path fill="#db0a28" d="M64.8 120.71c3.68 0 32.11-24.18 48.7-44.07c15.96-19.14 10.2-41.74 6.69-48.03c-4.15-7.43-56.94 17.01-56.94 17.01S14.07 17.99 10.39 23.99C5.4 32.13-1.59 53.54 12.52 73.45C27.5 94.6 60.85 120.71 64.8 120.71" />
+            //             <path fill="#ff262e" d="M64.55 114.2s52.26-38.68 56.75-62.3c4.25-22.37-4.45-33.22-15.16-38.45C78.99.19 65.29 26.21 64 26.21S49.95.14 23.7 11.42C9.24 17.63 3.18 34.53 8.91 53.57c8.41 27.94 55.64 60.63 55.64 60.63" />
+            //         </svg>
+            //     </div>
+            // </div>
         </div>
     }
 }
