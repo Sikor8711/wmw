@@ -32,10 +32,10 @@ pub fn NewsForm() -> impl IntoView {
         {move || match saved_data.get() {
             Some(data) => view! {
                 <div class="text-center mx-auto space-y-3 pt-3">
-                    <h3 class="text-xl">"Confirm email."</h3>
-                    <p class="text-sm">{data.first_name}"- please confirm your email addres"</p>
-                    <p class="text-sm">"psst: Check spam folder and move to inbox"</p>
-                    <p class="text-sm">"XOXO"</p>
+                    <p class="text-xl">"Confirm email."</p>
+                    <p>{data.first_name}"- please confirm your email addres"</p>
+                    <p>"psst: Check spam folder and move to inbox"</p>
+                    <p>"XOXO"</p>
                 </div>
             }.into_any(),
             None => view! {
