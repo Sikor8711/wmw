@@ -25,7 +25,13 @@ pub fn App() -> impl IntoView {
 
         // sets the document title
         <Title text="Wildly Magnetic" />
-
+        <script async src="https://stats.wildlymagnetic.co/js/pa-eKCu2gGzHLm1C_y1Bc66Q.js"></script>
+        <Script>
+        "
+        window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+        plausible.init()
+        "
+        </Script>
 
         // content for this welcome page
         <Router>
