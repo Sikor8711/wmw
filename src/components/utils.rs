@@ -57,15 +57,31 @@ pub fn NewsForm() -> impl IntoView {
 
 #[component]
 pub fn MauticTracker() -> impl IntoView {
-    view! {
-        <script>
-            {r#"
-                (function(w,d,t,u,n,a,m){w['MauticTrackingObject']=n;
-                w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)},a=d.createElement(t),
-                m=d.getElementsByTagName(t)[0];a.async=1;a.src=u;m.parentNode.insertBefore(a,m)
-                })(window,document,'script','https://m.wildlymagnetic.co/mtc.js','mt');
-                mt('send', 'pageview');
-            "#}    
-        </script>
-    }
+    // Effect::new is safe to use in SSR; it only runs on the client
+    Effect::new(move |_| {
+        use web_sys::window;
+
+        // By having the features enabled in Cargo.toml,
+        // win will now be recognized as web_sys::Window
+        if let Some(win) = window() {
+            if let Some(doc) = win.document() {
+                if let Ok(script) = doc.create_element("script") {
+                    let _ = script.set_attribute("type", "text/javascript");
+
+                    script.set_inner_html(r#"
+                        (function(w,d,t,u,n,a,m){w['MauticTrackingObject']=n;
+                            w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)},a=d.createElement(t),
+                            m=d.getElementsByTagName(t)[0];a.async=1;a.src=u;m.parentNode.insertBefore(a,m)
+                        })(window,document,'script','https://m.wildlymagnetic.co/mtc.js','mt');
+
+                        mt('send', 'pageview');
+                    "#);
+
+                    if let Some(body) = doc.body() {
+                        let _ = body.append_child(&script);
+                    }
+                }
+            }
+        }
+    });
 }
