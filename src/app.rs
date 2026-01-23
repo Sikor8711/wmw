@@ -1,5 +1,4 @@
 use crate::components::layout::MainLayout;
-// use crate::components::utils::MauticTracker;
 use crate::pages::about::AboutPage;
 use crate::pages::home::HomePage;
 use leptos::prelude::*;
@@ -40,7 +39,6 @@ pub fn App() -> impl IntoView {
                 </Routes>
             </main>
         </Router>
-        // <MauticTracker />
     }
 }
 
