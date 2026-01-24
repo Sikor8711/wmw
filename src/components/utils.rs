@@ -68,17 +68,44 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
     // 1. Logic inside this block only exists for the server
     #[cfg(feature = "ssr")]
     {
-        // MOVE ALL "DANGEROUS" IMPORTS HERE
-        use awc::http::header;
+        use awc::http::{header, Method};
         use base64::{engine::general_purpose, Engine as _};
         use dotenvy::dotenv;
         use serde_json::json;
         use std::env;
-        println!(">>> Server Function Started"); // LOG 1
-        let _ = dotenv();
 
+        async fn matuic_api(
+            method: Method,
+            path: &str,
+            body: Option<Value>,
+        ) -> Result<Value, ServerFnError> {
+            let _ = dotenv();
+            let url = env::var("MAUTIC_URL").expect("MAUTIC_URL missing");
+            let login = env::var("MAUTIC_LOGIN").expect("MAUTIC_LOGIN missing");
+            let password = env::var("MAUTIC_PASSWORD").expect("MAUTIC_PASSWORD missing");
+
+            let cred = format!("{}:{}", login, password);
+            let encode_cred = general_purpose::STANDARD.encode(cred.as_bytes());
+            let auth = format!("Basic {}", encode_cred);
+            let final_path = format!("{}/{}", url, path);
+            let client = awc::Client::default();
+            let mut response = if let Some(b) = body {
+                client
+                    .request(method, final_path)
+                    .insert_header((header::AUTHORIZATION, auth))
+                    .send_json(&b)
+                    .await
+            } else {
+                client
+                    .request(method, final_path)
+                    .insert_header((header::AUTHORIZATION, auth))
+                    .send()
+                    .await
+            }
+            .map_err(|e| ServerFnError::new(e.to_string()))?;
+        }
+        let _ = dotenv();
         let url = env::var("MAUTIC_URL").expect("MAUTIC_URL missing");
-        println!(">>> Mautic URL: {}", url); // LOG 2
         let login = env::var("MAUTIC_LOGIN").expect("MAUTIC_LOGIN missing");
         let password = env::var("MAUTIC_PASSWORD").expect("MAUTIC_PASSWORD missing");
 
@@ -88,12 +115,13 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
 
         let body = json!({
             "firstname": customer_data.first_name,
-            "email": customer_data.email
+            "email": customer_data.email,
+            "tags": ["Not-Confirm"]
         });
 
-        println!(">>> Sending request to Mautic..."); // LOG 3
         let client = awc::Client::default();
-        let check_email = client
+
+        let mut check_email = client
             .get(format!(
                 "{}/contacts?search=email:{}",
                 url, customer_data.email
@@ -112,24 +140,45 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
                 check_email.status()
             )));
         }
-        let response = client
-            .post(format!("{}/contacts/new", url))
-            .insert_header((header::AUTHORIZATION, auth.clone()))
-            .send_json(&body)
-            .await
-            .map_err(|e| {
-                println!(">>> Request Failed: {:?}", e); // LOG 4
-                ServerFnError::new(e.to_string())
-            })?;
 
-        if !response.status().is_success() {
-            return Err(ServerFnError::new(format!(
-                "Mautic error: {}",
-                response.status()
-            )));
+        let res = check_email.json::<serde_json::Value>().await?;
+        let total = res["total"].as_str().unwrap_or("0");
+        let email_id = res["contacts"]
+            .as_object()
+            .and_then(|map| map.keys().next());
+
+        println!(
+            "total email {}, email id {}",
+            total,
+            email_id.unwrap_or(&"Not Found".to_string())
+        );
+
+        let mut final_id: Option<String> = None;
+        if let Some(id) = email_id {
+            final_id = Some(id.to_string());
+        } else {
+            let mut new_contact = client
+                .post(format!("{}/contacts/new", url))
+                .insert_header((header::AUTHORIZATION, auth.clone()))
+                .send_json(&body)
+                .await
+                .map_err(|e| {
+                    println!(">>> Request Failed: {:?}", e); // LOG 4
+                    ServerFnError::new(e.to_string())
+                })?;
+
+            if !new_contact.status().is_success() {
+                return Err(ServerFnError::new(format!(
+                    "Mautic error: {}",
+                    new_contact.status()
+                )));
+            }
+
+            println!(">>> New contact created! <<<"); // LOG 4
+            let res = new_contact.json::<serde_json::Value>().await?;
+            let new_contact_id = res["contact"]["id"].as_u64().map(|id| id.to_string());
+            final_id = Some(new_contact_id.unwrap_or("No id".to_string()));
         }
-
-        println!(">>> Request Success! <<<"); // LOG 4
         Ok(()) // Return for the SSR block
     }
 
@@ -140,5 +189,5 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
         // It never actually runs because the server macro intercepts the call.
         let _ = customer_data;
         Ok(())
-    }
+    };
 }
