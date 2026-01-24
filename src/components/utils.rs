@@ -73,6 +73,7 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
         use dotenvy::dotenv;
         use serde_json::{json, Value};
         use std::env;
+        use uuid::Uuid;
 
         async fn mautic_api(
             method: Method,
@@ -121,10 +122,12 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
             .as_object()
             .and_then(|map| map.keys().next());
 
+        let my_token = Uuid::new_v4().to_string();
         let body = json!({
             "firstname": customer_data.first_name,
             "email": customer_data.email,
-            "tags": ["Not-Confirm"]
+            "tags": ["Not-Confirm"],
+            "optintoken": my_token
         });
 
         if let Some(id) = email_id {
