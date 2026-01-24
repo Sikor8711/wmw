@@ -90,11 +90,31 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
             "firstname": customer_data.first_name,
             "email": customer_data.email
         });
+
         println!(">>> Sending request to Mautic..."); // LOG 3
         let client = awc::Client::default();
+        let check_email = client
+            .get(format!(
+                "{}/contacts?search=email:{}",
+                url, customer_data.email
+            ))
+            .insert_header((header::AUTHORIZATION, auth.clone()))
+            .send()
+            .await
+            .map_err(|e| {
+                println!(">>> Request Failed: {:?}", e); // LOG 4
+                ServerFnError::new(e.to_string())
+            })?;
+
+        if !check_email.status().is_success() {
+            return Err(ServerFnError::new(format!(
+                "Mautic error: {}",
+                check_email.status()
+            )));
+        }
         let response = client
             .post(format!("{}/contacts/new", url))
-            .insert_header((header::AUTHORIZATION, auth))
+            .insert_header((header::AUTHORIZATION, auth.clone()))
             .send_json(&body)
             .await
             .map_err(|e| {
@@ -109,6 +129,7 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
             )));
         }
 
+        println!(">>> Request Success! <<<"); // LOG 4
         Ok(()) // Return for the SSR block
     }
 
