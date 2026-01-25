@@ -14,9 +14,10 @@ pub fn HeroSection() -> impl IntoView {
                         <source srcset="/assets/images/luiza_bnner.webp" />
                     <img
                         src="/assets/images/luiza_bnner.webp"
-                        widht="800"
+                        width="800"
                         height="600"
-                        fetchprority="high"
+                        fetchpriority="high"
+                        loading="eager"
                         alt="Luiza"
                         decoding="async"
                         class="-z-10 max-w-[80%]"
@@ -27,9 +28,10 @@ pub fn HeroSection() -> impl IntoView {
                     <source srcset="/assets/images/luiza_bnner.webp" />
                     <img
                         src="/assets/images/luiza_bnner.webp"
-                        widht="800"
+                        width="800"
                         height="600"
-                        fetchprority="high"
+                        fetchpriority="high"
+                        loading="eager"
                         alt="Luiza"
                         decoding="async"
                         class="absolute top-0 left-0 max-w-[80%] opacity-80 brightness-110"
