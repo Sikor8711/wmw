@@ -64,7 +64,7 @@ pub fn HomePage() -> impl IntoView {
             </div>
         </div>
         <TagButton bname="1h MASTERCLASS" />
-        <div class="bg-[url(/assets/images/taniec_kobieta.webp)] bg-no-repeat bg-cover">
+        <div class="reveal-on-scrol bg-[url(/assets/images/taniec_kobieta.webp)] bg-no-repeat bg-cover">
             <div class="bg-white/80 text-xl">
                 <div class="text-right pt-5 pr-2">
                     <p class="pt-3 mr-12">
