@@ -1,6 +1,7 @@
 use crate::components::layout::MainLayout;
 use crate::pages::about::AboutPage;
 use crate::pages::home::HomePage;
+use crate::pages::optin::OptIn;
 use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::{
@@ -40,6 +41,7 @@ pub fn App() -> impl IntoView {
                     <ParentRoute path=StaticSegment("") view=MainLayout>
                         <Route path=StaticSegment("") view=HomePage />
                         <Route path=StaticSegment("about") view=AboutPage />
+                        <Route path=StaticSegment("optin") view=OptIn />
                         <Route path=WildcardSegment("any") view=NotFound />
                     </ParentRoute>
                 </Routes>

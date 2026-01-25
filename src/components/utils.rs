@@ -75,7 +75,7 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
         use std::env;
         use uuid::Uuid;
 
-        async fn mautic_api(
+        pub async fn mautic_api(
             method: Method,
             path: &str,
             body: Option<Value>,
@@ -156,4 +156,13 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
         let _ = customer_data;
         Ok(())
     };
+}
+#[server(VerifyAndConfirm, "/api")]
+pub async fn verify_and_confirm(token: String) -> Result<String, ServerFnError> {
+    #[cfg(feature = "ssr")]
+    {
+
+    use 
+    let search_path = format!("contacts?search=optintoken:{}", token);
+    let res = mautic_api(Method::GET, search_path, None);
 }
