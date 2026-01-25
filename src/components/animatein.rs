@@ -1,7 +1,5 @@
 use leptos::html;
 use leptos::prelude::*;
-use leptos_use::{use_intersection_observer, UseIntersectionObserverReturn};
-
 #[component]
 pub fn AnimateIn(
     #[prop(default = "animate-soulful")] animation: &'static str,
@@ -11,11 +9,20 @@ pub fn AnimateIn(
     let (is_visible, set_is_visible) = signal(false);
 
     Effect::new(move |_| {
-        let _ = use_intersection_observer(el, move |entries, _| {
-            if entries[0].is_intersecting() {
-                set_is_visible.set(true);
-            }
-        });
+        use leptos_use::{use_intersection_observer_with_options, UseIntersectionObserverOptions};
+
+        let _ = use_intersection_observer_with_options(
+            el,
+            move |entries, _| {
+                if entries[0].is_intersecting() {
+                    set_is_visible.set(true);
+                }
+            },
+            // The builder chain ends here, THEN you close the function
+            UseIntersectionObserverOptions::default()
+                .thresholds(vec![0.3])
+                .root_margin("-50px"), // No comma here
+        ); // The closing parenthesis for the whole function goes here
     });
     view! {
         <div

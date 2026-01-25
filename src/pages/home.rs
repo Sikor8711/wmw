@@ -1,9 +1,11 @@
+use crate::components::animatein::AnimateIn;
 use crate::components::utils::NewsForm;
 use crate::components::utils::TagButton;
 use leptos::prelude::*;
 #[component]
 pub fn HomePage() -> impl IntoView {
     view! {
+        <AnimateIn>
         <div class="max-w-225 mx-auto">
             <div class="relative m-7">
                 <div class="absolute right-0 bottom-0 size-[85%] bg-(--bg-sec) -z-100"></div>
@@ -41,6 +43,8 @@ pub fn HomePage() -> impl IntoView {
                 </div>
             </div>
         </div>
+        </AnimateIn>
+        <AnimateIn>
         <div class="mb-5">
             <div class="grid grid-cols-1 grid-rows-1 place-items-center">
                 <p class="z-10 px-3 py-3 text-[5vw]/[8vw] md:text-4xl/14 text-center row-start-1 row-end-1 col-start-1 col-end-1">
@@ -63,6 +67,8 @@ pub fn HomePage() -> impl IntoView {
                 />
             </div>
         </div>
+        </AnimateIn>
+        <AnimateIn>
         <TagButton bname="1h MASTERCLASS" />
         <div class="reveal-on-scrol bg-[url(/assets/images/taniec_kobieta.webp)] bg-no-repeat bg-cover">
             <div class="bg-white/80 text-xl">
@@ -91,31 +97,45 @@ pub fn HomePage() -> impl IntoView {
                 </div>
             </div>
         </div>
+        </AnimateIn>
+        <AnimateIn>
         <div>
             <p class="py-8 text-center font-gistesy md:text-5xl text-[8vw] text-nowrap">"You’re freaking magnetic and you know it."</p>
         </div>
+        </AnimateIn>
+        <AnimateIn>
         <TagButton bname="FREE GUIDE" />
         <div class="bg-[url(/assets/images/pokoj.webp)] bg-center bg-no-repeat bg-cover ">
-        <div class="py-10 bg-white/80">
+            <div class="py-10 bg-white/80">
                 <div class="place-self-center pl-2 max-w-75">
                         <NewsForm/>
                 </div>
             </div>
         </div>
+        </AnimateIn>
         <div class="pt-8">
             <div class="h-8 bg-(--bg-sec)"> </div>
         </div>
         <div class="space-y-10 bg-[url(/assets/images/liscie_o2.webp)] bg-center py-10">
+
+        <AnimateIn>
             <h3 class="text-[5vw] md:text-3xl text-center">"Meet Luiza - the soul behind the"
             <br/>
             <span class="font-gistesy text-[7vw] md:text-4xl text-nowrap">"Wildly Magnetic"</span></h3>
+        </AnimateIn>
+        <AnimateIn>
             <img class="w-[65%] mx-auto" src="/assets/images/luiza_w_marynarce3.webp" loading="lazy" alt=""/>
+        </AnimateIn>
+        <AnimateIn>
             <p class="px-[10%] text-justify">
                 "A woman who didn’t find herself in perfection, but in the mess of real life — in exhaustion, in starting over, in choosing herself again and again. She carries the depth, yes, but also the earth — the late nights, the quiet rebuild, the courage to walk away from a life that drained her."
             </p>
+        </AnimateIn>
+        <AnimateIn>
             <p class="px-[10%] text-justify">
                 "Her work is where soul meets truth, guiding you back to the version of yourself your body remembers, your heart misses, and your future is already calling in."
             </p>
+        </AnimateIn>
             <div class="mx-[10%] bg-(--bg-sec) text-[4vw]/[6vw] md:text-2xl text-center space-y-6 py-6">
                 <p class="">
                     "You weren’t born to follow rules."
@@ -124,11 +144,12 @@ pub fn HomePage() -> impl IntoView {
                 </p>
                 <p class="font-gistesy text-[6vw] md:text-4xl">"Let’s get you there."</p>
             </div>
+
             <div class="flex justify-center">
                 <button class="text-nowrap text-black text-xl bg-(--bg-rose) h-auto rounded-full p-4 shadow-2xl ">"Activate My Wild Potential!"</button>
             </div>
-
         </div>
+        <AnimateIn>
         <div  class="relative bg-(--bg-darker) px-[10%] pb-10">
             <div class="relative text-sm text-(--bg-lighter) pt-10 space-y-6 z-50">
                 <h3 class="text-2xl text-center pb-3">"The Heartfire Behind What I Do"</h3>
@@ -149,14 +170,17 @@ pub fn HomePage() -> impl IntoView {
             </div>
             <img class="absolute  w-auto h-[60%] bottom-0 right-0 z-0" src="/assets/images/kobieta_i_swieca_2_3_luiza.webp" loading="lazy" alt="Woman and candle"/>
         </div>
+        </AnimateIn>
+        <AnimateIn>
         <div class="bg-(--bg-sec)">
-        <div class="space-y-6 py-10 px-[10%] bg-[url(/assets/images/liscie_o2.webp)] bg-center bg-size-[200%] bg-no-repeat">
-            <p class="font-gistesy text-[7vw] md:text-4xl">"There’s a fire in you..."</p>
-            <p class="font-gistesy text-[7vw] md:text-4xl text-center">"Let’s turn it into pure wild magnetism."</p>
-            <div class="flex justify-center">
-                <button class="text-nowrap text-black text-xl bg-(--bg-rose) h-auto rounded-full p-4 shadow-2xl ">"I'm So Ready to Rise!"</button>
+            <div class="space-y-6 py-10 px-[10%] bg-[url(/assets/images/liscie_o2.webp)] bg-center bg-size-[200%] bg-no-repeat">
+                <p class="font-gistesy text-[7vw] md:text-4xl">"There’s a fire in you..."</p>
+                <p class="font-gistesy text-[7vw] md:text-4xl text-center">"Let’s turn it into pure wild magnetism."</p>
+                <div class="flex justify-center">
+                    <button class="text-nowrap text-black text-xl bg-(--bg-rose) h-auto rounded-full p-4 shadow-2xl ">"I'm So Ready to Rise!"</button>
+                </div>
             </div>
         </div>
-        </div>
+        </AnimateIn>
     }
 }

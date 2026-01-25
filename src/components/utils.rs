@@ -52,7 +52,7 @@ pub fn TagButton(
     bname: &'static str,
 ) -> impl IntoView {
     view! {
-        <div class="flex justify-center translate-y-3">
+        <div class="flex justify-center translate-y-3 z-100">
             <h4 class="bg-white px-2 rounded-2xl">"↓ "{bname.to_string()}" ↓"</h4>
         </div>
     }
