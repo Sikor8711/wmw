@@ -2,6 +2,22 @@ use crate::components::utils::verify_and_confirm;
 use leptos::prelude::*;
 use leptos_router::hooks::use_query_map;
 
+#[derive(serde::Serialize, serde::Deserialize, Clone, Debug, PartialEq)]
+struct BoxMessage {
+    message: String,
+    email: String,
+}
+#[component]
+fn MessageBox(box_data: BoxMessage) -> impl IntoView {
+    view! {
+        <div class="animate-soulful">
+            <h1 class="text-xl md:text-3xl text-green-700">"Success"</h1>
+            <p class="text-md md:text-xl">{box_data.message}" " {box_data.email}" is now verified"</p>
+            <p class="pt-4 text-sm">"You can now close this window."</p>
+        </div>
+    }
+}
+
 #[component]
 pub fn OptIn() -> impl IntoView {
     let query = use_query_map();
@@ -23,20 +39,18 @@ pub fn OptIn() -> impl IntoView {
                     Some(Ok(data)) => {
                         if data.is_new_subscription {
                             view! {
-                                <div class="animate-soulful">
-                                    <h1 class="text-xl md:text-3xl text-green-700">"Success"</h1>
-                                    <p class="text-md md:text-xl">"Thank you. "{data.email} " is now verified."</p>
-                                    <p class="pt-4 text-sm">"You can now close this window."</p>
-                                </div>
-                            }.into_any()
+                                <MessageBox box_data=BoxMessage {
+                                        message: "Thank you!".to_string(),
+                                        email: data.email.clone()
+                                    }
+                                />}.into_any()
                         } else {
                             view! {
-                                <div class="animate-soulful">
-                                    <h1 class="text-xl md:text-3xl text-green-700">"Success"</h1>
-                                    <p class="text-md md:text-xl">"Welcome back!. "{data.email} " is now verified."</p>
-                                    <p class="pt-4 text-sm">"You can now close this window."</p>
-                                </div>
-                            }.into_any()
+                                <MessageBox box_data=BoxMessage {
+                                        message: "Welcome back!".to_string(),
+                                        email: data.email.clone()
+                                    }
+                                />}.into_any()
                         }
                     }.into_any(),
                     Some(Err(e)) => view! {
@@ -53,7 +67,7 @@ pub fn OptIn() -> impl IntoView {
                     }.into_any(),
                     None => view! {
                         <h1 class="animate-soulful text-xl md:text-3xl">"Please confirm your email address"</h1>
-                            <a href=move || format!("/optin?optintoken={}&submited=true", token())>
+                            <a href="/optin?submited=true">
                                 <button
                                 on:click=move |_| {send_token.dispatch(token());}
                                 disabled=is_pending

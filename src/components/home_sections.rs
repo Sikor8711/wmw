@@ -127,6 +127,68 @@ pub fn StopperSection() -> impl IntoView {
     }
 }
 
+// #[component]
+// pub fn NewsForm() -> impl IntoView {
+//     let (saved_data, set_saved_data) = signal::<Option<CustomerData>>(None);
+//     let first_name_ref: NodeRef<Input> = NodeRef::new();
+//     let email_ref: NodeRef<Input> = NodeRef::new();
+//     let add_contact = Action::new(|data: &CustomerData| {
+//         let data = data.clone();
+//         async move { add_mautic_contact(data).await }
+//     });
+//     let is_pending = add_contact.pending();
+//     let on_submit = move |ev: SubmitEvent| {
+//         ev.prevent_default();
+//         let f_name = first_name_ref.get().expect("input").value();
+//         let email_val = email_ref.get().expect("input").value();
+//         let new_customer = CustomerData {
+//             first_name: f_name,
+//             email: email_val,
+//         };
+//         add_contact.dispatch(new_customer.clone());
+//         set_saved_data.set(Some(new_customer));
+//     };
+//     view! {
+//         <div class="bg-[url(/assets/images/pokoj.webp)] bg-center bg-no-repeat bg-cover ">
+//             <div class="py-10 bg-white/80">
+//                 <div class="place-self-center pl-2 max-w-75">
+//                     {move || match saved_data.get()
+//                         {
+//                             Some(data) => view! {
+//                                 <div class="animate-soulful text-center mx-auto space-y-3 pt-3">
+//                                     <p class="text-xl">"Confirm email."</p>
+//                                     <p>{data.first_name}"- please confirm your email addres"</p>
+//                                     <p>"psst: Check spam folder and move to inbox"</p>
+//                                     <p>"XOXO"</p>
+//                                 </div>
+//                             }.into_any(),
+//                             None => view! {
+//                                 <AnimateIn>
+//                                     <h2 class="text-[1.2rem] pb-3 text-center">"The Magnetic Message"</h2>
+//                                 </AnimateIn>
+//                                 <AnimateIn>
+//                                     <p class="text-[1rem] text-center">"A soulful guide to finding the message that your dream clients can feel — and can’t resist."</p>
+//                                 </AnimateIn>
+//                                     <form on:submit=on_submit class="mx-auto space-y-3 pt-3">
+//                                         <AnimateIn>
+//                                             <input required class="border w-full p-1" type="text" placeholder="First name" node_ref=first_name_ref />
+//                                         </AnimateIn>
+//                                         <AnimateIn>
+//                                             <input required class="border w-full p-1" type="email" placeholder="Email" node_ref=email_ref />
+//                                         </AnimateIn>
+//                                         <AnimateIn>
+//                                             <button type="submit" disabled=is_pending class="w-full text-center text-black text-nowrap p-2 bg-(--bg-rose)">
+//                                                 {move || if is_pending.get() {"SENDING..."}else{"DIVE INTO FREE GUIDE"}}
+//                                             </button>
+//                                         </AnimateIn>
+//                                     </form>
+//                             }.into_any()
+//                         }}
+//                 </div>
+//             </div>
+//         </div>
+//     }
+// }
 #[component]
 pub fn NewsForm() -> impl IntoView {
     let (saved_data, set_saved_data) = signal::<Option<CustomerData>>(None);
@@ -154,34 +216,14 @@ pub fn NewsForm() -> impl IntoView {
                 <div class="place-self-center pl-2 max-w-75">
                     {move || match saved_data.get()
                         {
-                            Some(data) => view! {
-                                <div class="animate-soulful text-center mx-auto space-y-3 pt-3">
-                                    <p class="text-xl">"Confirm email."</p>
-                                    <p>{data.first_name}"- please confirm your email addres"</p>
-                                    <p>"psst: Check spam folder and move to inbox"</p>
-                                    <p>"XOXO"</p>
-                                </div>
-                            }.into_any(),
+                            Some(data) => view! {<SuccessState name=data.first_name /> }.into_any(),
                             None => view! {
-                                <AnimateIn>
-                                    <h2 class="text-[1.2rem] pb-3 text-center">"The Magnetic Message"</h2>
-                                </AnimateIn>
-                                <AnimateIn>
-                                    <p class="text-[1rem] text-center">"A soulful guide to finding the message that your dream clients can feel — and can’t resist."</p>
-                                </AnimateIn>
-                                    <form on:submit=on_submit class="mx-auto space-y-3 pt-3">
-                                        <AnimateIn>
-                                            <input required class="border w-full p-1" type="text" placeholder="First name" node_ref=first_name_ref />
-                                        </AnimateIn>
-                                        <AnimateIn>
-                                            <input required class="border w-full p-1" type="email" placeholder="Email" node_ref=email_ref />
-                                        </AnimateIn>
-                                        <AnimateIn>
-                                            <button type="submit" disabled=is_pending class="w-full text-center text-black text-nowrap p-2 bg-(--bg-rose)">
-                                                {move || if is_pending.get() {"SENDING..."}else{"DIVE INTO FREE GUIDE"}}
-                                            </button>
-                                        </AnimateIn>
-                                    </form>
+                                <FormState
+                                    on_submit=on_submit
+                                    is_pending=is_pending.into()
+                                    f_ref=first_name_ref
+                                    e_ref=email_ref
+                                />
                             }.into_any()
                         }}
                 </div>
@@ -189,6 +231,46 @@ pub fn NewsForm() -> impl IntoView {
         </div>
     }
 }
+#[component]
+fn SuccessState(name: String) -> impl IntoView {
+    view! {
+        <div class="animate-soulful text-center mx-auto space-y-3 pt-3">
+            <p class="text-xl">"Confirm email."</p>
+            <p>{name}"- please confirm your email addres"</p>
+            <p>"psst: Check spam folder and move to inbox"</p>
+            <p>"XOXO"</p>
+        </div>
+    }
+}
+#[component]
+fn FormState(
+    on_submit: impl Fn(SubmitEvent) + 'static + Clone,
+    is_pending: Signal<bool>,
+    f_ref: NodeRef<Input>,
+    e_ref: NodeRef<Input>,
+) -> impl IntoView {
+    view! {
+        <AnimateIn><h2 class="text-[1.2rem] pb-3 text-center">"The Magnetic Message"</h2></AnimateIn>
+        <AnimateIn>
+            <p class="text-[1rem] text-center">"A soulful guide to finding the message that your dream clients can feel."</p>
+        </AnimateIn>
+
+        <form on:submit=move |ev| on_submit(ev) class="mx-auto space-y-3 pt-3">
+            <AnimateIn>
+                <input required class="border w-full p-1" type="text" placeholder="First name" node_ref=f_ref />
+            </AnimateIn>
+            <AnimateIn>
+                <input required class="border w-full p-1" type="email" placeholder="Email" node_ref=e_ref />
+            </AnimateIn>
+            <AnimateIn>
+                <button type="submit" disabled=is_pending class="w-full text-center text-black p-2 bg-(--bg-rose)">
+                    {move || if is_pending.get() { "SENDING..." } else { "DIVE INTO FREE GUIDE" }}
+                </button>
+            </AnimateIn>
+        </form>
+    }
+}
+
 #[component]
 pub fn Stopper2() -> impl IntoView {
     view! {
