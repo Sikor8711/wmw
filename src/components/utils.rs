@@ -1,7 +1,5 @@
-use crate::components::animatein::AnimateIn;
 use crate::models::CustomerData;
 use leptos::prelude::*;
-use leptos::{ev::SubmitEvent, html::Input};
 use std::env;
 
 #[cfg(feature = "ssr")]
@@ -44,79 +42,6 @@ pub async fn mautic_api(
         .await
         .map_err(|e| ServerFnError::new(e.to_string()))?;
     Ok(res_json)
-}
-
-#[component]
-pub fn TagButton(
-    /// Name of separator uppercase
-    #[prop()]
-    bname: &'static str,
-) -> impl IntoView {
-    view! {
-        <div class="flex justify-center translate-y-3 z-100">
-            <h4 class="bg-white px-2 rounded-2xl">"↓ "{bname.to_string()}" ↓"</h4>
-        </div>
-    }
-}
-#[component]
-pub fn NewsForm() -> impl IntoView {
-    let (saved_data, set_saved_data) = signal::<Option<CustomerData>>(None);
-    let first_name_ref: NodeRef<Input> = NodeRef::new();
-    let email_ref: NodeRef<Input> = NodeRef::new();
-    let add_contact = Action::new(|data: &CustomerData| {
-        let data = data.clone();
-        async move { add_mautic_contact(data).await }
-    });
-    let is_pending = add_contact.pending();
-    let on_submit = move |ev: SubmitEvent| {
-        ev.prevent_default();
-        let f_name = first_name_ref.get().expect("input").value();
-        let email_val = email_ref.get().expect("input").value();
-        let new_customer = CustomerData {
-            first_name: f_name,
-            email: email_val,
-        };
-        add_contact.dispatch(new_customer.clone());
-        set_saved_data.set(Some(new_customer));
-    };
-    view! {
-        {move || match saved_data.get() {
-            Some(data) => view! {
-                <div class="animate-soulful text-center mx-auto space-y-3 pt-3">
-                    <p class="text-xl">"Confirm email."</p>
-                    <p>{data.first_name}"- please confirm your email addres"</p>
-                    <p>"psst: Check spam folder and move to inbox"</p>
-                    <p>"XOXO"</p>
-                </div>
-            }.into_any(),
-            None => view! {
-
-                <AnimateIn>
-                <h2 class="text-[1.2rem] pb-3 text-center">"The Magnetic Message"</h2>
-                </AnimateIn>
-                <AnimateIn>
-                <p class="text-[1rem] text-center">"A soulful guide to finding the message that your dream clients can feel — and can’t resist."</p>
-                </AnimateIn>
-                <form on:submit=on_submit class="mx-auto space-y-3 pt-3">
-                <AnimateIn>
-                    <input required class="border w-full p-1" type="text" placeholder="First name"
-                        node_ref=first_name_ref
-                    />
-                </AnimateIn>
-                <AnimateIn>
-                    <input required class="border w-full p-1" type="email" placeholder="Email"
-                        node_ref=email_ref
-                    />
-                </AnimateIn>
-                <AnimateIn>
-                    <button type="submint" disabled=is_pending class="w-full text-center text-black text-nowrap p-2 bg-(--bg-rose)">
-                        {move || if is_pending.get() {"SENDING..."}else{"DIVE INTO FREE GUIDE"}}
-                    </button>
-                </AnimateIn>
-                </form>
-            }.into_any()
-        }}
-    }
 }
 
 #[server(AddMuticContac, "/api")]
