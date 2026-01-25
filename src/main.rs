@@ -1,3 +1,4 @@
+#![recursion_limit = "512"]
 #[cfg(feature = "ssr")]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
