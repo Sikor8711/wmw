@@ -63,6 +63,7 @@
     background-color: var(--primary-bg);
     max-width: 900px;
     margin-inline: auto;
+    @apply: no-scrollbar;
   }
   .atext {
     font-size: 12vw;
@@ -109,33 +110,27 @@
 @keyframes soulfulEntry {
   from {
     opacity: 0;
-    transform: translateY(15px) scale(0.98);
+    transform: translateY(15px) scale(0.3);
   }
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
-
 .animate-soulful {
   animation: soulfulEntry 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-@keyframes reveal {
+@keyframes soulfulExit {
   from {
-    opacity: 0;
-    transform: translateY(50px);
+    opacity: 1;
+    transform: translateY(0px) scale(1);
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    opacity: 0;
+    transform: translateY(-15px) scale(0.3);
   }
 }
 
-.reveal-on-scroll {
-  view-timeline-name: --revealing;
-  view-timeline-axis: block;
-  animation: linear reveal both;
-  animation-timeline: --revealing;
-  /* This ensures the animation only plays once as you enter */
-  animation-range: entry 10% cover 30%; 
+.animate-soulful-out {
+  animation: soulfulExit 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

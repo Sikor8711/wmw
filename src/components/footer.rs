@@ -1,3 +1,4 @@
+use crate::components::animatein::AnimateIn;
 use chrono::prelude::*;
 use leptos::prelude::*;
 #[component]
@@ -7,7 +8,10 @@ pub fn Footer() -> impl IntoView {
         <div class="bg-(--bg-darker) text-sm text-white py-5 px-5">
             <div class="grid gap-5 grid-cols-1 sm:grid-cols-2 place-items-center text-center">
                 <div class="space-y-5 pt-3">
+                    <AnimateIn>
                     <p class="font-gistesy text-5xl">"Wildly Magnetic"</p>
+                    </AnimateIn>
+                    <AnimateIn>
                     <div class="flex gap-3 justify-center-safe">
                         <a href="/about" target="_blank">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 32 32">
@@ -35,7 +39,9 @@ pub fn Footer() -> impl IntoView {
                             </svg>
                         </a>
                     </div>
+                    </AnimateIn>
                     <div class="flex gap-3 items-center justify-center">
+                        <AnimateIn>
                         <div class="flex items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                                 <path fill="#fff" d="M11.733 6.5A4.233 4.233 0 0 0 7.5 10.733a.5.5 0 1 0 1 0A3.233 3.233 0 0 1 11.733 7.5H12.8a2.7 2.7 0 0 1 2.7 2.7v.8a.5.5 0 0 0 1 0v-.8a3.7 3.7 0 0 0-3.7-3.7z" />
@@ -44,27 +50,37 @@ pub fn Footer() -> impl IntoView {
                             </svg>
                             <a href="mail:info@wildlymagnetic.co">"info@wildlymagnetic.co"</a>
                         </div>
+                        </AnimateIn>
                     </div>
                 </div>
                 <div class="space-y-2 pb-3 pt-2">
+                    <AnimateIn>
                     <p class="text-[1rem]">
                         "START YOUR TRANSFORMATION HERE ↓"
                     </p>
+                    </AnimateIn>
+                    <AnimateIn>
                     <p class="text-justify pb-3">
                         "Get wildly magnetic Instagram strategies + empowering business inspiration delivered to your inbox every week."
                     </p>
+                    </AnimateIn>
+                    <AnimateIn>
                     <form class="relative w-full flex justify-end">
                         <img class="absolute bottom-[-20] sm:bottom-[-10] left-0" src="assets/images/heart_line.webp" alt="line with heart"/>
                         <input class="w-[70%] rounded-lg text-center p-1" placeholder="sign up for newsletter" type="email"/>
                     </form>
+                    </AnimateIn>
                 </div>
             </div>
         </div>
         <div class="bg-(--bg-darker) text-sm text-white space-y-4 pb-4">
+            <AnimateIn>
             <div class="flex justify-center gap-3 text-[0.8rem]">
                 <a href="/terms-of-use">"Terms of use"</a>
                 <a href="/privacy-policy">"Privacy Policy"</a>
             </div>
+            </AnimateIn>
+            <AnimateIn>
             <div class="flex gap-2 justify-center text-[0.8rem]">
                 <p class="text-center">"Wildly Magnetic, 124 City Road, London, EC1V 2NX"</p>
             </div>
@@ -73,7 +89,7 @@ pub fn Footer() -> impl IntoView {
                 <p class="font-gistesy text-[0.8rem]">" Wildly Magnetic"</p>
                 <p>"All right reserve"</p>
             </div>
-
+            </AnimateIn>
             <div class="flex gap-1 justify-center items-center text-[0.7rem]">
                 <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="-2 -5 24 24">
                     <path fill="#fff" d="M18.572.083L10.676 7.12a1 1 0 0 1-1.331 0L1.416.087A2 2 0 0 1 2 0h16a2 2 0 0 1 .572.083m1.356 1.385q.071.255.072.532v10a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 .072-.534l7.942 7.148a3 3 0 0 0 3.992 0z" />

@@ -1,39 +1,38 @@
 use leptos::html;
 use leptos::prelude::*;
+use leptos_use::{use_intersection_observer_with_options, UseIntersectionObserverOptions};
 #[component]
 pub fn AnimateIn(
-    #[prop(default = "animate-soulful")] animation: &'static str,
+    #[prop(default = "animate-soulful")] animation_in: &'static str,
+    #[prop(default = "animate-soulful-out")] animation_out: &'static str,
     children: Children,
 ) -> impl IntoView {
-    let el = NodeRef::<html::Div>::new();
+    let sensor_ref = NodeRef::<html::Div>::new(); // The "Anchor"
     let (is_visible, set_is_visible) = signal(false);
 
     Effect::new(move |_| {
-        use leptos_use::{use_intersection_observer_with_options, UseIntersectionObserverOptions};
-
         let _ = use_intersection_observer_with_options(
-            el,
+            sensor_ref, // We watch the anchor
             move |entries, _| {
-                if entries[0].is_intersecting() {
-                    set_is_visible.set(true);
-                }
+                set_is_visible.set(entries[0].is_intersecting());
             },
-            // The builder chain ends here, THEN you close the function
             UseIntersectionObserverOptions::default()
                 .thresholds(vec![0.3])
-                .root_margin("-50px"), // No comma here
-        ); // The closing parenthesis for the whole function goes here
+                .root_margin("-50px"),
+        );
     });
+
     view! {
-        <div
-            node_ref=el
-            class=move || if is_visible.get() {
-                animation.to_string()
+        // This DIV stays perfectly still in the layout
+        <div node_ref=sensor_ref class="relative">
+            // This DIV does the actual animating
+            <div class=move || if is_visible.get() {
+                animation_in.to_string()
             } else {
-                "opacity-0".to_string()
-            }
-            >
-            {children()}
+                animation_out.to_string()
+            }>
+                {children()}
             </div>
+        </div>
     }
 }

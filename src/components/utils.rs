@@ -1,3 +1,4 @@
+use crate::components::animatein::AnimateIn;
 use crate::models::CustomerData;
 use leptos::prelude::*;
 use leptos::{ev::SubmitEvent, html::Input};
@@ -89,18 +90,29 @@ pub fn NewsForm() -> impl IntoView {
                 </div>
             }.into_any(),
             None => view! {
+
+                <AnimateIn>
                 <h2 class="text-[1.2rem] pb-3 text-center">"The Magnetic Message"</h2>
+                </AnimateIn>
+                <AnimateIn>
                 <p class="text-[1rem] text-center">"A soulful guide to finding the message that your dream clients can feel — and can’t resist."</p>
+                </AnimateIn>
                 <form on:submit=on_submit class="mx-auto space-y-3 pt-3">
+                <AnimateIn>
                     <input required class="border w-full p-1" type="text" placeholder="First name"
                         node_ref=first_name_ref
                     />
+                </AnimateIn>
+                <AnimateIn>
                     <input required class="border w-full p-1" type="email" placeholder="Email"
                         node_ref=email_ref
                     />
+                </AnimateIn>
+                <AnimateIn>
                     <button type="submint" disabled=is_pending class="w-full text-center text-black text-nowrap p-2 bg-(--bg-rose)">
                         {move || if is_pending.get() {"SENDING..."}else{"DIVE INTO FREE GUIDE"}}
                     </button>
+                </AnimateIn>
                 </form>
             }.into_any()
         }}
