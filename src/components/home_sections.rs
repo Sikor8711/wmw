@@ -64,6 +64,7 @@ pub fn ManSection() -> impl IntoView {
                     class="w-full h-auto row-start-1 row-end-1 col-start-1 col-end-1 opacity-20 object-fill"
                 />
                 <div class="z-10 row-start-1 row-end-1 col-start-1 col-end-1">
+                    <AnimateIn>
                     <p class="px-3 py-3 text-[5vw]/[8vw] md:text-4xl/14 text-center">
                         <b>"The place "</b>
                         "where wild-hearted"
@@ -76,6 +77,7 @@ pub fn ManSection() -> impl IntoView {
                         <br />
                         <b>"brand into legacy."</b>
                     </p>
+                    </AnimateIn>
                 </div>
             </div>
         </div>
