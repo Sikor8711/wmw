@@ -65,7 +65,7 @@ pub fn Footer() -> impl IntoView {
                     </p>
                     </AnimateIn>
                     <AnimateIn>
-                    <form class="relative w-full flex justify-end">
+                   <form class="relative w-full flex justify-end">
                         <img class="absolute bottom-[-20] sm:bottom-[-10] left-0" src="assets/images/heart_line.webp" alt="line with heart"/>
                         <input class="w-[70%] rounded-lg text-center p-1" placeholder="sign up for newsletter" type="email"/>
                     </form>

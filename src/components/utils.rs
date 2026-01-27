@@ -83,9 +83,18 @@ pub async fn add_mautic_contact(customer_data: CustomerData) -> Result<(), Serve
                 .or_else(|| res["contact"]["id"].as_str().map(|s| s.to_string()))
             {
                 let segment_id = env::var("MAUTIC_SEGMENT_ID").expect("MAUTIC_SEGMENT_ID missing");
+                let email_id = env::var("OPTIN_EMAIL_ID").expect("OPTIN_EMAIL_ID missing");
+
+                // const sendConfirmationEmail = await fetch(`${MAUTIC_BASE_URL}/emails/${MAUTIC_COMFIRMATION_EMAIL_ID}/contact/${contactId}/send`, {
                 let _ = mautic_api(
                     Method::POST,
                     &format!("segments/{}/contact/{}/add", segment_id, new_id),
+                    None,
+                )
+                .await?;
+                let _ = mautic_api(
+                    Method::POST,
+                    &format!("emails/{}/contact/{}/send", email_id, new_id),
                     None,
                 )
                 .await?;
