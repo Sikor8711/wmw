@@ -337,3 +337,53 @@ pub fn FireInYou() -> impl IntoView {
         </div>
     }
 }
+#[component]
+pub fn FooterForm() -> impl IntoView {
+    let (save_data, set_save_data) = signal::<Option<CustomerData>>(None);
+    let email_ref: NodeRef<Input> = NodeRef::new();
+    let add_contact = Action::new(|data: &CustomerData| {
+        let data = data.clone();
+        async move { add_mautic_contact(data).await }
+    });
+    let is_pending = add_contact.pending();
+    let on_submit = move |ev: SubmitEvent| {
+        ev.prevent_default();
+        let email_val = email_ref.get().expect("input").value();
+        let new_customer = CustomerData {
+            first_name: "".to_string(),
+            email: email_val,
+        };
+        add_contact.dispatch(new_customer.clone());
+        set_save_data.set(Some(new_customer));
+    };
+    view! {
+        {move || match save_data.get()
+            {
+            Some(_data) => view! {
+                <div class="relative w-full flex justify-center">
+                    <img class="absolute bottom-[-20] sm:bottom-[-15] left-0" src="assets/images/heart_line.webp" alt="line with heart"/>
+                    <p required class="w-[40%] rounded-lg text-center p-1">"Success!"</p>
+                </div>
+            }.into_any(),
+            None => view! {
+                <form on:submit=on_submit class="relative w-full flex gap-1 justify-end">
+                    <img class="absolute bottom-[-20] sm:bottom-[-15] left-0" src="assets/images/heart_line.webp" alt="line with heart"/>
+                    {move || if is_pending.get() {
+                        view! {
+                            <p>"Sending..."</p>
+                        }.into_any() 
+                    } else {
+                        view! { 
+                            <input required class="w-[40%] rounded-lg text-center p-1" placeholder="sign up for newsletter" type="email" node_ref=email_ref /> 
+                        }.into_any() 
+                    }}
+                    <button type="submit" class="h-5 w-10 z-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 512 512">
+                        <path fill="#fff" d="M160 136v104h153.37l-52.68-52.69a16 16 0 0 1 22.62-22.62l80 80a16 16 0 0 1 0 22.62l-80 80a16 16 0 0 1-22.62-22.62L313.37 272H160v104a56.06 56.06 0 0 0 56 56h208a56.06 56.06 0 0 0 56-56V136a56.06 56.06 0 0 0-56-56H216a56.06 56.06 0 0 0-56 56M48 240a16 16 0 0 0 0 32h112v-32Z" />
+                        </svg>
+                    </button>
+                </form>
+            }.into_any()
+        }}
+    }.into_any()
+}

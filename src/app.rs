@@ -23,6 +23,7 @@ pub fn App() -> impl IntoView {
         // injects a stylesheet into the document <head>
         // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pkg/wmw.css" />
+        <Script src="https://cdn.paddle.com/paddle/v2/paddle.js"/>
 
         // sets the document title
         <Title text="Wildly Magnetic" />
