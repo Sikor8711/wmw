@@ -1,63 +1,78 @@
-use actix_web::{get, post, web, HttpResponse, Responder};
-use awc::Client;
 use serde::{Deserialize, Serialize};
 
-pub struct AppState {
-    pub paddle_client: Client,
-    pub paddle_api_key: String,
+// --- SHARED DATA STRUCTURES (Visible to Client & Server) ---
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PaddleItem {
+    pub price_id: String,
+    pub quantity: u32,
 }
 
 #[derive(Serialize)]
-struct PaddleItem {
-    price_id: String,
-    quantity: u32,
-}
-
-#[derive(Serialize)]
-struct TransactionRequest {
-    items: Vec<PaddleItem>,
-}
-#[derive(Deserialize)]
-struct TransactionResponse {
-    data: TransactionData,
+#[serde(rename_all = "camelCase")]
+pub struct TransactionRequest {
+    pub items: Vec<PaddleItem>,
 }
 
 #[derive(Deserialize)]
-struct TransactionData {
-    id: String,
+pub struct TransactionResponse {
+    pub data: TransactionData,
 }
 
-#[post("/api/create-payment")]
-pub async fn create_payment(
-    state: web::Data<AppState>,
-    price_id: web::Json<String>,
-) -> impl Responder {
-    let payload = TransactionRequest {
-        items: vec![PaddleItem {
-            price_id: price_id.into_inner(),
-            quantity: 1,
-        }],
-    };
-    let response = state
-        .paddle_client
-        .post("https://sandbox-api.paddle.com/transactions")
-        .bearer_auth(&state.paddle_api_key)
-        .send_json(&payload)
-        .await;
-    match response {
-        Ok(mut res) => {
-            if res.status().is_success() {
-                let body: TransactionResponse = res.json().await.unwrap();
-                HttpResponse::Ok().json(body.data.id)
-            } else {
-                let error_body = res.body().await.unwrap();
-                println!("Paddle Error: {:?}", error_body);
-                HttpResponse::InternalServerError().body("Paddle API Error")
+#[derive(Deserialize)]
+pub struct TransactionData {
+    pub id: String,
+}
+
+// --- SERVER ONLY CODE (Hidden from Client) ---
+#[cfg(feature = "ssr")]
+pub mod ssr {
+    use super::*; // Import the structs from above
+    use crate::state::AppState;
+    use axum::{extract::State, http::StatusCode, response::IntoResponse, Json}; // <--- Import from the new state.rs
+
+    pub async fn create_payment(
+        State(state): State<AppState>,
+        Json(price_id): Json<String>,
+    ) -> impl IntoResponse {
+        let payload = TransactionRequest {
+            items: vec![PaddleItem {
+                price_id,
+                quantity: 1,
+            }],
+        };
+
+        // This works now because it's inside the 'ssr' feature block
+        let client = reqwest::Client::new();
+
+        let response = client
+            .post("https://sandbox-api.paddle.com/transactions")
+            .bearer_auth(&state.paddle_key)
+            .json(&payload)
+            .send()
+            .await;
+
+        match response {
+            Ok(res) => {
+                if res.status().is_success() {
+                    match res.json::<TransactionResponse>().await {
+                        Ok(body) => (StatusCode::OK, Json(body.data.id)).into_response(),
+                        Err(e) => {
+                            println!("JSON Parse Error: {}", e);
+                            (StatusCode::INTERNAL_SERVER_ERROR, "Invalid Upstream JSON")
+                                .into_response()
+                        }
+                    }
+                } else {
+                    let error_text = res.text().await.unwrap_or_default();
+                    println!("Paddle API Error: {}", error_text);
+                    (StatusCode::INTERNAL_SERVER_ERROR, "Paddle API Error").into_response()
+                }
             }
-        }
-        Err(e) => {
-            println!("Request faild: {}", e);
-            HttpResponse::InternalServerError().body("Network Error")
+            Err(e) => {
+                println!("Network Request Failed: {}", e);
+                (StatusCode::INTERNAL_SERVER_ERROR, "Network Error").into_response()
+            }
         }
     }
 }

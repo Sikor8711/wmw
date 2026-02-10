@@ -6,7 +6,7 @@ use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::{
     components::{ParentRoute, Route, Router, Routes},
-    StaticSegment, WildcardSegment,
+    path, // Helper for type-safe paths if needed, though strings work mostly
 };
 
 #[component]
@@ -20,14 +20,18 @@ pub fn App() -> impl IntoView {
         <Link rel="preload" href="/assets/fonts/libre_baskerville/LibreBaskerville-Regular.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
         <Link rel="preload" href="/assets/fonts/libre_baskerville/LibreBaskerville-Bold.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
         <Link rel="preload" href="/assets/fonts/libre_baskerville/LibreBaskerville-Italic.woff2" as_="font" type_="font/woff2" attr:crossorigin="anonymous" />
+
         // injects a stylesheet into the document <head>
-        // id=leptos means cargo-leptos will hot-reload this stylesheet
         <Stylesheet id="leptos" href="/pkg/wmw.css" />
+
+        // Paddle Script
         <Script src="https://cdn.paddle.com/paddle/v2/paddle.js"/>
 
         // sets the document title
         <Title text="Wildly Magnetic" />
-        <script async src="https://stats.wildlymagnetic.co/js/pa-eKCu2gGzHLm1C_y1Bc66Q.js"></script>
+
+        // Plausible Analytics
+        <Script async_="true" src="https://stats.wildlymagnetic.co/js/pa-eKCu2gGzHLm1C_y1Bc66Q.js"></Script>
         <Script>
         "
         window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
@@ -35,20 +39,24 @@ pub fn App() -> impl IntoView {
         "
         </Script>
 
-        // content for this welcome page
+        // Router
         <Router>
             <main>
                 <Routes fallback=move || "Not found.">
-                    <ParentRoute path=StaticSegment("") view=MainLayout>
-                        <Route path=StaticSegment("") view=HomePage />
-                        <Route path=StaticSegment("about") view=AboutPage />
-                        <Route path=StaticSegment("optin") view=OptIn />
-                        <Route path=WildcardSegment("any") view=NotFound />
+                    // NOTE: Leptos 0.7 Router syntax simplification
+                    // No need for StaticSegment wrapper anymore
+                    <ParentRoute path=path!("") view=MainLayout>
+                        <Route path=path!("") view=HomePage />
+                        <Route path=path!("about") view=AboutPage />
+                        <Route path=path!("optin") view=OptIn />
+                        <Route path=path!("*any") view=NotFound />
                     </ParentRoute>
                 </Routes>
             </main>
         </Router>
-        <script>
+
+        // Mautic Tracking
+        <Script>
             "
                 (function(w,d,t,u,n,a,m){w['MauticTrackingObject']=n;
                 w[n]=w[n]||function(){(w[n].q=w[n].q||[]).push(arguments)},a=d.createElement(t),
@@ -56,25 +64,21 @@ pub fn App() -> impl IntoView {
                 })(window,document,'script','https://m.wildlymagnetic.co/mtc.js','mt');
                 mt('send', 'pageview');
             "
-        </script>
+        </Script>
     }
 }
 
-/// 404 - Not Founattr:d
+/// 404 - Not Found
 #[component]
 fn NotFound() -> impl IntoView {
     // set an HTTP status code 404
-    // this is feature gated because it can only be done during
-    // initial server-side rendering
-    // if you navigate to the 404 page subsequently, the status
-    // code will not be set because there is not a new HTTP request
-    // to the server
     #[cfg(feature = "ssr")]
     {
-        // this can be done inline because it's synchronous
-        // if it were async, we'd use a server function
-        let resp = expect_context::<leptos_actix::ResponseOptions>();
-        resp.set_status(actix_web::http::StatusCode::NOT_FOUND);
+        // 1. Get the Axum Response Options
+        if let Some(resp) = use_context::<leptos_axum::ResponseOptions>() {
+            // 2. Set the status code using generic http or axum::http
+            resp.set_status(axum::http::StatusCode::NOT_FOUND);
+        }
     }
 
     view! { <h1>"Not Found"</h1> }
