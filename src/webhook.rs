@@ -2,7 +2,6 @@
 pub mod ssr {
     // ✅ FIX 1: Import HeaderMap from 'http', not 'extract'
     use axum::{
-        body::Bytes,
         http::{HeaderMap, StatusCode},
         response::IntoResponse,
     };

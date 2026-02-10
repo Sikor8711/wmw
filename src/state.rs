@@ -1,3 +1,4 @@
+#[cfg(feature = "ssr")]
 use leptos::config::LeptosOptions;
 
 #[cfg(feature = "ssr")]

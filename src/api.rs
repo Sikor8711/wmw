@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-// --- SHARED DATA STRUCTURES (Visible to Client & Server) ---
+// --- SHARED DATA STRUCTURES ---
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PaddleItem {
@@ -24,12 +24,12 @@ pub struct TransactionData {
     pub id: String,
 }
 
-// --- SERVER ONLY CODE (Hidden from Client) ---
+// --- SERVER ONLY CODE ---
 #[cfg(feature = "ssr")]
 pub mod ssr {
-    use super::*; // Import the structs from above
+    use super::*;
     use crate::state::AppState;
-    use axum::{extract::State, http::StatusCode, response::IntoResponse, Json}; // <--- Import from the new state.rs
+    use axum::{extract::State, http::StatusCode, response::IntoResponse, Json}; // Correct import
 
     pub async fn create_payment(
         State(state): State<AppState>,
@@ -42,7 +42,6 @@ pub mod ssr {
             }],
         };
 
-        // This works now because it's inside the 'ssr' feature block
         let client = reqwest::Client::new();
 
         let response = client
