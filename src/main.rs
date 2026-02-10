@@ -1,5 +1,11 @@
 #![recursion_limit = "512"]
 #[cfg(feature = "ssr")]
+mod webhook;
+
+#[cfg(feature = "ssr")]
+mod api;
+
+#[cfg(feature = "ssr")]
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     rustls::crypto::aws_lc_rs::default_provider()
@@ -8,10 +14,12 @@ async fn main() -> std::io::Result<()> {
     console_error_panic_hook::set_once();
     use actix_files::Files;
     use actix_web::*;
+    use awc::Client;
     use leptos::config::get_configuration;
     use leptos::prelude::*;
     use leptos_actix::{generate_route_list, LeptosRoutes};
     use leptos_meta::MetaTags;
+    use std::env;
     use wmw::app::*;
 
     let conf = get_configuration(None).unwrap();
@@ -20,6 +28,8 @@ async fn main() -> std::io::Result<()> {
     let site_root = &leptos_options.site_root;
     let css_content = std::fs::read_to_string(format!("{site_root}/pkg/wmw.css"))
         .unwrap_or_else(|_| "".to_string());
+
+    let paddle_api_key = env::var("PADDLE_API_KEY").expect("PADDLE_API_KEY must be set in .env");
 
     HttpServer::new(move || {
         // Generate the list of routes in your Leptos App

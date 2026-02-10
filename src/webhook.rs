@@ -1,13 +1,29 @@
-use actic_web::{post, web, HttpRequest, HttpResponse, Responder};
-use paddle_rust_sdk::webhooks::WebhookVerifier;
+use actix_web::{post, HttpRequest, HttpResponse, Responder};
+use paddle_rust_sdk::{webhooks::MaximumVariance, Paddle};
 use std::env;
 
-#[post("/webhook/paddle")]
-async fn paddle_webook(req: HttpRequest, body: String) -> impl Responder {
-    let signature_header = match reg.headers().get("Paddle-Signature") {
-        Some(h) => h.to_str().unwrap_ro(""),
-        None => return HttpResponse::BadRequest().body("Missing Paddle-Signature"),
+#[post("/paddle-callback")]
+pub async fn paddle_callback(request_body: String, req: HttpRequest) -> impl Responder {
+    let maybe_signature = req
+        .headers()
+        .get("paddle-signature")
+        .and_then(|h| h.to_str().ok());
+
+    let Some(signature) = maybe_signature else {
+        return HttpResponse::BadRequest().body("Missing Signature");
     };
-    let sicret_key = env::var("PADDLE_WEBHOOK_SECRET").expect("PADDLE_WEBHOOK_SECRET must be set");
-    let verifier = WebhookVerifier::new(&sicret_key);
+    let key = env::var("PADDLE_WEBHOOK_SECRET").expect("PADDLE_WEBHOOK_SECRET must be set");
+
+    match Paddle::unmarshal(&request_body, &key, signature, MaximumVariance::default()) {
+        Ok(event) => {
+            actix_web::rt::spawn(async move {
+                println!("Processing Event: {:?}", event);
+            });
+            HttpResponse::Ok().body("Webhook recieved")
+        }
+        Err(e) => {
+            eprintln!("Webhook Verification Vaild: {:?}", e);
+            HttpResponse::BadRequest().body("Invalid Signature")
+        }
+    }
 }
