@@ -33,6 +33,8 @@ Built entirely in Rust, this application leverages the Leptos framework for a re
 
 ## 🚀 Getting Started
 
+temp hosting <https://test.sikormedia.com>
+
 ### Prerequisites
 
 Ensure you have the following installed:
