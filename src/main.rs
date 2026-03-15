@@ -1,13 +1,6 @@
 #![recursion_limit = "512"]
 
 #[cfg(feature = "ssr")]
-use wmw::state::AppState;
-
-// ❌ DELETED: mod webhook;  <-- These were the cause of the errors!
-// ❌ DELETED: mod api;      <-- They belong to lib.rs, not main.rs
-
-// --- SSR IMPORTS ---
-#[cfg(feature = "ssr")]
 use axum::{
     body::Body,
     extract::{Request, State},
@@ -29,6 +22,8 @@ use std::net::SocketAddr;
 use tower_http::services::ServeDir;
 #[cfg(feature = "ssr")]
 use wmw::app::*;
+#[cfg(feature = "ssr")]
+use wmw::state::AppState;
 
 // --- SSR MAIN FUNCTION ---
 #[cfg(feature = "ssr")]
