@@ -80,12 +80,12 @@ pub fn Footer() -> impl IntoView {
             </AnimateIn>
             <AnimateIn>
             <div class="flex gap-2 justify-center text-[0.8rem]">
-                <p class="text-center">"Wildly Magnetic, 124 City Road, London, EC1V 2NX"</p>
+                <p class="text-center">"Wildly Magnetic , 124 City Road, London, EC1V 2NX"</p>
             </div>
             <div class="flex gap-2 justify-center text-[0.8rem]">
-                <p>{dt.year()}" "</p>
-                <p class="font-gistesy text-[0.8rem]">" Wildly Magnetic"</p>
-                <p>"All right reserve"</p>
+                <p>"© " {dt.year()}" "</p>
+                <p class="font-gistesy text-[0.8rem]">" Wildly Magnetic®."</p>
+                <p>" All rights reserved."</p>
             </div>
             </AnimateIn>
             <div class="flex gap-1 justify-center items-center text-[0.7rem]">
