@@ -48,9 +48,6 @@ items: [{{ priceId: '{price_id}', quantity: 1 }}]
             <input type="checkbox" onclick="toggleItem(this)" />
             "Add coaching session"
         </label>
-        <label for="name">
-            <input type="text" bind:value={move || f_name} />
-        </label>
         <div class="paddle-checkout-box w-full min-h-80"></div>
         <script>{script}</script>
     </div>
