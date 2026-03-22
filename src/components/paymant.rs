@@ -2,8 +2,6 @@ use leptos::prelude::*;
 
 #[component]
 pub fn CheckoutPage() -> impl IntoView {
-    let (email, set_email) = signal("".to_string());
-
     let token = "test_03ea1e075f335d2b2f3cdf22b4c";
     let price_id = "pri_01kgw2nvx9mf3a3d7neqz9jpkn";
     let price_id2 = "pri_01kkmp3eedgkwphde7w3wrjvs7";
@@ -21,7 +19,6 @@ frameInitialHeight: 450,
 frameStyle: 'width: 100%; background-color: transparent; border: none;'
 }},
 items: [{{ priceId: '{price_id}', quantity: 1 }}]
-customer: {{email: '{:?email}'}},
 }});
 
 function toggleItem(checkbox) {{
@@ -52,7 +49,7 @@ items: [{{ priceId: '{price_id}', quantity: 1 }}]
             "Add coaching session"
         </label>
         <label for="name">
-            <input type="email" on:input:target=move |ev| {set_email.set(ev.target().value());} />
+            <input type="text" bind:value={move || f_name} />
         </label>
         <div class="paddle-checkout-box w-full min-h-80"></div>
         <script>{script}</script>
