@@ -96,8 +96,11 @@ pub fn UnlockSection() -> impl IntoView {
                     <div class="place-self-center">
                         <div class="h-full flex items-center">
                             <img class="max-w-8 mr-0.5" src="/assets/images/button_deco.webp" loading="lazy" alt="" />
-                            <button class="text-nowrap text-[1rem] bg-white h-auto rounded-3xl p-2 shadow-2xl ">"Let's go
-                                WILD!"</button>
+                            <a href="/product">
+                                <button class="text-nowrap text-[1rem] bg-white h-auto rounded-3xl p-2 shadow-2xl ">
+                                    "Let's go WILD!"
+                                </button>
+                            </a>
                             <img class="scale-x-[-1] max-w-8 ml-0.5" src="/assets/images/button_deco.webp" loading="lazy"
                                 alt="" />
                         </div>
