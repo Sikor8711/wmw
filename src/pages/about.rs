@@ -1,4 +1,4 @@
-use crate::components::paymant::CheckoutPage;
+use crate::components::lemon::LemonPayment;
 use leptos::prelude::*;
 #[component]
 pub fn AboutPage() -> impl IntoView {
@@ -20,7 +20,9 @@ pub fn AboutPage() -> impl IntoView {
         None => view! { <p>"Wait for it"</p> }.into_any(),
         }}
     </Suspense>
-    <CheckoutPage />
+
+    <LemonPayment />
+
     }
 }
 
