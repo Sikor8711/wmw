@@ -41,10 +41,10 @@ pub fn Menu() -> impl IntoView {
     });
 
     view! {
-    <div node_ref=menu_ref class=move || format!("grid grid-cols-1 overflow-visible z-[200] {}", if open.get()
-        {"bg-(--bg-sec) z-100"} else {""})>
-        <button class=move || format!("group h-15 w-15 transition duration-300 {}", if open.get() {"justify-self-start"}
-            else {"justify-self-end"}) on:click=move |_| set_open.update(|o| *o=!*o)>
+    <div node_ref=menu_ref class=move || format!("grid grid-cols-1 z-[200] {}", if open.get() {"bg-(--bg-sec) z-100"}
+        else {""})>
+        <button class=move || format!("group h-15 w-15 {}", if open.get() {"justify-self-start"} else
+            {"justify-self-end"}) on:click=move |_| set_open.update(|o| *o=!*o)>
             <div class="grid justify-items-center gap-1.5">
                 <span class=move || format!( "h-1 w-8 rounded-full bg-(--bg-darker) transition duration-300 {}" , if
                     open.get() { "rotate-45 translate-y-2.5" } else { "" } )></span>
@@ -55,7 +55,7 @@ pub fn Menu() -> impl IntoView {
             </div>
         </button>
         <div class=move || format!("flex flex-col gap-5 px-5 mx-5 mb-5 {}", if open.get() {" transition duration-300
-            opacity-100"} else {"opacity-0 pointer-events-none translate-x-[100%]"})>
+            opacity-100 block"} else {"opacity-0 pointer-events-none translate-x-[100%] hidden"})>
             <a href="/">"Home"</a>
             <a href="/about">"About"</a>
             <a href="/product">"Product"</a>

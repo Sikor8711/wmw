@@ -3,6 +3,7 @@ use crate::pages::about::AboutPage;
 use crate::pages::home::HomePage;
 use crate::pages::optin::OptIn;
 use crate::pages::payment::PaymentPage;
+use crate::pages::privacy_policy::PrivacyPolicyPage;
 use leptos::prelude::*;
 use leptos_meta::*;
 use leptos_router::{
@@ -65,6 +66,7 @@ pub fn App() -> impl IntoView {
                     <Route path=path!("") view=HomePage />
                     <Route path=path!("about") view=AboutPage />
                     <Route path=path!("payment") view=PaymentPage />
+                    <Route path=path!("privacy-policy") view=PrivacyPolicyPage />
                     <Route path=path!("optin") view=OptIn />
                     <Route path=path!("*any") view=NotFound />
                 </ParentRoute>
