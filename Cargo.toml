@@ -46,6 +46,8 @@ serde_json = "1.0"
 rustls = { version = "0.23", optional = true, features = ["aws_lc_rs"] }
 uuid = { version = "1.22", features = ["v4"], optional = true }
 paddle-rust-sdk = "0.17.0"                                               # Ensure this version is compatible
+leptos_ui = "0.3.21"
+tw_merge = "0.1.20"
 
 
 [features]

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @theme {
   --font-gistesy: "Gistesy";
   --font-baskerville: "LibreBaskerville";
@@ -9,6 +10,7 @@
   --bg-lighter: #fcf9fa;
   --bg-footer: #8a7769;
 }
+
 @font-face {
   font-family: "Gistesy";
   font-weight: 200;
@@ -16,34 +18,36 @@
   font-display: swap;
   src: url("/assets/fonts/gistesy/Gistesy.woff2") format("woff2");
 }
+
 @font-face {
   font-family: "LibreBaskerville";
   font-weight: 200;
   font-style: normal;
   font-display: swap;
-  src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Regular.woff2")
-    format("woff2");
+  src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Regular.woff2") format("woff2");
 }
+
 @font-face {
   font-family: "LibreBaskerville";
   font-weight: bold;
   font-style: normal;
   font-display: swap;
-  src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Bold.woff2")
-    format("woff2");
+  src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Bold.woff2") format("woff2");
 }
+
 @font-face {
   font-family: "LibreBaskerville";
   font-weight: 200;
   font-style: italic;
   font-display: swap;
-  src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Italic.woff2")
-    format("woff2");
+  src: url("/assets/fonts/libre_baskerville/LibreBaskerville-Italic.woff2") format("woff2");
 }
+
 .Layout-wrapper {
   margin: 0px;
   padding: 0px;
 }
+
 .logo {
   max-height: 50px;
   max-width: 100%;
@@ -52,6 +56,7 @@
   justify-content: center;
   transform: translateX(-10%);
 }
+
 @layer base {
   html {
     color: var(--bg-darker);
@@ -65,14 +70,17 @@
     margin-inline: auto;
     @apply: no-scrollbar;
   }
+
   .atext {
     font-size: 12vw;
     line-height: 12vw;
   }
+
   .atext2 {
     font-size: 4vw;
     line-height: 1vw;
   }
+
   .bottom-line {
     stroke: var(--bg-darker);
     stroke-width: 2;
@@ -84,22 +92,26 @@
     stroke-dashoffset: 1700;
     animation: draw-fill-hide-stroke 5s infinite ease-out forwards;
   }
+
   @keyframes draw-fill-hide-stroke {
     0% {
       stroke-dashoffset: 1700;
       fill-opacity: 0;
       stroke-opacity: 1;
     }
+
     50% {
       stroke-dashoffset: 0;
       fill-opacity: 0;
       stroke-opacity: 1;
     }
+
     80% {
       stroke-dashoffset: 0;
       fill-opacity: 1;
       stroke-opacity: 0;
     }
+
     100% {
       stroke-dashoffset: 0;
       fill-opacity: 0;
@@ -107,24 +119,29 @@
     }
   }
 }
+
 @keyframes soulfulEntry {
   from {
     opacity: 0;
     transform: translateY(15px) scale(0.3);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
   }
 }
+
 .animate-soulful {
   animation: soulfulEntry 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
 @keyframes soulfulExit {
   from {
     opacity: 1;
     transform: translateY(0px) scale(1);
   }
+
   to {
     opacity: 0;
     transform: translateY(-15px) scale(0.3);
@@ -133,4 +150,72 @@
 
 .animate-soulful-out {
   animation: soulfulExit 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes mSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes mSlideOut {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+}
+
+.manuSlideIn {
+  animation: mSlideIn 0.3s ease-out;
+}
+
+.manuSlideOut {
+  pointer-events: none;
+  animation: mSlideOut 0.3s ease-in;
+}
+
+@keyframes sDown {
+  from {
+    max-height: 80px;
+  }
+
+  to {
+    max-height: 40px;
+  }
+}
+
+@keyframes sUp {
+  from {
+    max-height: 40px;
+  }
+
+  to {
+    max-height: 80px;
+  }
+}
+
+.logoSDown {
+  z-index: 200;
+  max-height: 40px;
+  animation: sDown 0.3s ease-in-out;
+}
+
+.logoSUp {
+  max-height: 80px;
+  animation: sUp 0.3s;
 }
