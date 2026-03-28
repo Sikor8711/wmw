@@ -164,29 +164,9 @@
   }
 }
 
-@keyframes mSlideOut {
-  0% {
-    opacity: 0;
-  }
 
-  50% {
-    opacity: 1;
-    transform: translateX(0px);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-}
-
-.manuSlideIn {
+.menuSlideIn {
   animation: mSlideIn 0.3s ease-out;
-}
-
-.manuSlideOut {
-  pointer-events: none;
-  animation: mSlideOut 0.3s ease-in;
 }
 
 @keyframes sDown {
@@ -218,4 +198,15 @@
 .logoSUp {
   max-height: 80px;
   animation: sUp 0.3s;
+}
+
+.menuSlidein2 {
+  width: 0px;
+  opacity: 0;
+  transition: all 0.3s ease-out;
+}
+
+.menuSlidein2.start {
+  width: 100px;
+  opacity: 1;
 }

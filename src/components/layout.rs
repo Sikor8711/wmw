@@ -7,10 +7,10 @@ use leptos_router::components::Outlet;
 pub fn MainLayout() -> impl IntoView {
     view! {
     <div class="Layout-wrapper">
-        <header class="sticky top-0">
+        <header class="sticky top-0 z-200">
             <NavBar />
         </header>
-        <main>
+        <main class="pt-26">
             <Outlet />
         </main>
         <footer>
