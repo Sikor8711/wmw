@@ -210,3 +210,19 @@
   width: 100px;
   opacity: 1;
 }
+
+.menuSlideIn3 {
+  transform: translateX(50px);
+  opacity: 0;
+}
+
+.menuSlideIn3.start {
+  animation: slidein3 0.3s ease-out forwards;
+}
+
+@keyframes slidein3 {
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
