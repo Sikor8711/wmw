@@ -13,6 +13,13 @@ leptos_axum = { version = "0.7", optional = true }
 tower = { version = "0.5", optional = true }
 tower-http = { version = "0.6", features = ["fs", "trace"], optional = true }
 tokio = { version = "1", features = ["full"], optional = true }
+openid = { version = "0.23.0", optional = true }
+oauth2 = { version = "5.0.0", optional = true }
+tower-sessions = { version = "0.15.0", optional = true }
+tower-sessions-sqlx-store = { version = "0.15.0", optional = true }
+axum-login = { version = "0.18.0", optional = true }
+rand = { version = "0.10.0", optional = true }
+lettre = { version = "0.11.20", optional = true }
 # -----------------------------------
 
 console_error_panic_hook = "0.1"
@@ -37,7 +44,10 @@ web-sys = { version = "0.3", features = [
 
 # --- HTTP CLIENT (Replaces awc) ---
 # Used for server-side requests (e.g. to Mautic/Paddle)
-reqwest = { version = "0.12", default-features = false, features = ["rustls-tls", "json"], optional = true }
+reqwest = { version = "0.12", default-features = false, features = [
+  "rustls-tls",
+  "json",
+], optional = true }
 # ----------------------------------
 
 dotenvy = { version = "0.15", optional = true }
@@ -48,18 +58,18 @@ uuid = { version = "1.23", features = ["v4"], optional = true }
 paddle-rust-sdk = "0.17.0"                                               # Ensure this version is compatible
 leptos_ui = "0.3.21"
 tw_merge = "0.1.20"
-
+sqlx = "0.8.6"
 
 [features]
 csr = ["leptos/csr"]
 hydrate = ["leptos/hydrate"]
 ssr = [
-  "dep:axum",          # CHANGED
-  "dep:leptos_axum",   # CHANGED
-  "dep:tower",         # NEW
-  "dep:tower-http",    # NEW
-  "dep:tokio",         # NEW
-  "dep:reqwest",       # REPLACES awc
+  "dep:axum",                      # CHANGED
+  "dep:leptos_axum",               # CHANGED
+  "dep:tower",                     # NEW
+  "dep:tower-http",                # NEW
+  "dep:tokio",                     # NEW
+  "dep:reqwest",                   # REPLACES awc
   "dep:dotenvy",
   "dep:base64",
   "dep:uuid",
@@ -67,6 +77,12 @@ ssr = [
   "leptos_meta/ssr",
   "leptos_router/ssr",
   "dep:rustls",
+  "dep:openid",
+  "dep:oauth2",
+  "dep:tower-sessions",
+  "dep:tower-sessions-sqlx-store",
+  "dep:axum-login",
+  "dep:lettre",
   # Removed awc-specific features
 ]
 
