@@ -30,8 +30,8 @@ pub fn NavBar() -> impl IntoView {
     view! {
         <div class=move || {
             format!(
-                "h-14 fixed top-0 w-full left-0 z-50 {}",
-                if at_top.get() { "bg-none" } else { "h-12 bg-(--primary-bg)" },
+                "h-14 fixed top-0 w-full left-0 z-50  {}",
+                if at_top.get() { "bg-none" } else { "h-12 bg-(--primary-bg)/80" },
             )
         }>
             <div class="py-2 -translate-x-3 relative">
