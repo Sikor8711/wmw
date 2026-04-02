@@ -83,7 +83,6 @@ ssr = [
   "dep:tower-sessions-sqlx-store",
   "dep:axum-login",
   "dep:lettre",
-  # Removed awc-specific features
 ]
 
 # Defines a size-optimized profile for the WASM bundle in release mode
