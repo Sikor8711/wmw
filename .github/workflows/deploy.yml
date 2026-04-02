@@ -22,18 +22,19 @@ jobs:
         run: cargo binstall cargo-leptos -y --force
       - name: Build Release
         run: cargo leptos build --release
-      - name: Debug connectivity
+      - name: Trust Server Keys
         run: |
-          curl -s ifconfig.me
-          curl -v --connect-timeout 10 telnet://${{ secrets.VPS_HOST }}:2222 || true
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.PROXY_HOST }} >> ~/.ssh/known_hosts
       - name: Upload Binary to Temp
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
-          port: 2222
-          fingerprint: sha256
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_username: ${{ secrets.PROXY_USER }}
+          proxy_key: ${{ secrets.PROXY_KEY }}
           source: "target/release/${{ env.PROJECT_NAME }}"
           target: "/tmp"
           strip_components: 2
@@ -44,8 +45,9 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
-          port: 2222
-          fingerprint: sha256
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_username: ${{ secrets.PROXY_USER }}
+          proxy_key: ${{ secrets.PROXY_KEY }}
           source: "target/site"
           target: "/tmp/leptos_site"
           strip_components: 1
@@ -56,6 +58,8 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
-          port: 2222
-          fingerprint: sha256
+          proxy_host: ${{ secrets.PROXY_HOST }}
+          proxy_username: ${{ secrets.PROXY_USER }}
+          proxy_key: ${{ secrets.PROXY_KEY }}
+          proxy_strict: false
           script: sudo /usr/local/bin/deploy_wmw.sh
