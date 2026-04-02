@@ -1,87 +1,60 @@
 name: Deploy WMW (Secure)
-
 on:
   push:
     branches: ["main"]
-
 env:
   PROJECT_NAME: wmw
-
 jobs:
   deploy:
     runs-on: ubuntu-22.04
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-
       # --- BUILD SECTION ---
-
       - name: Install Rust Nightly
         uses: dtolnay/rust-toolchain@nightly
         with:
           targets: wasm32-unknown-unknown
-
-      # 1. Install Binstall (Needed to install cargo-leptos fast)
       - name: Install cargo-binstall
         run: curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash
-
       - name: Cache Rust dependencies
         uses: Swatinem/rust-cache@v2
-
-      # 2. INSTALL LEPTOS (This was missing in your failed run!)
       - name: Install cargo-leptos
         run: cargo binstall cargo-leptos -y --force
-
       - name: Build Release
         run: cargo leptos build --release
-
       # --- DEPLOY SECTION ---
-
       - name: Trust Server Keys
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -H ${{ secrets.PROXY_HOST }} >> ~/.ssh/known_hosts
-
-      # 3. Upload Binary
+          ssh-keyscan -p 2222 -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
       - name: Upload Binary to Temp
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
-          proxy_host: ${{ secrets.PROXY_HOST }}
-          proxy_username: ${{ secrets.PROXY_USER }}
-          proxy_key: ${{ secrets.PROXY_KEY }}
+          port: 2222
           source: "target/release/${{ env.PROJECT_NAME }}"
           target: "/tmp"
           strip_components: 2
           overwrite: true
-
-      # 4. Upload Assets
       - name: Upload Assets to Temp
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
-          proxy_host: ${{ secrets.PROXY_HOST }}
-          proxy_username: ${{ secrets.PROXY_USER }}
-          proxy_key: ${{ secrets.PROXY_KEY }}
+          port: 2222
           source: "target/site"
           target: "/tmp/leptos_site"
           strip_components: 1
           overwrite: true
-
-      # 5. Execute Deploy Script
       - name: Run Deploy Script
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
-          proxy_host: ${{ secrets.PROXY_HOST }}
-          proxy_username: ${{ secrets.PROXY_USER }}
-          proxy_key: ${{ secrets.PROXY_KEY }}
-          proxy_strict: false
+          port: 2222
           script: sudo /usr/local/bin/deploy_wmw.sh
