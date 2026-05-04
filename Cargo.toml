@@ -55,21 +55,27 @@ base64 = { version = "0.22", optional = true }
 serde_json = "1.0"
 rustls = { version = "0.23", optional = true, features = ["aws_lc_rs"] }
 uuid = { version = "1.23", features = ["v4"], optional = true }
-paddle-rust-sdk = "0.17.0"                                               # Ensure this version is compatible
+paddle-rust-sdk = "0.17.0" # Ensure this version is compatible
 leptos_ui = "0.3.22"
 tw_merge = "0.1.21"
-sqlx = "0.8.6"
+sqlx = { version = "0.8.6", features = [
+  "runtime-tokio",
+  "sqlite",
+], optional = true }
+time = { version = "0.3.47", optional = true }
 
 [features]
 csr = ["leptos/csr"]
 hydrate = ["leptos/hydrate"]
 ssr = [
-  "dep:axum",                      # CHANGED
-  "dep:leptos_axum",               # CHANGED
-  "dep:tower",                     # NEW
-  "dep:tower-http",                # NEW
-  "dep:tokio",                     # NEW
-  "dep:reqwest",                   # REPLACES awc
+  "dep:axum",
+  "dep:sqlx",
+  "dep:time",
+  "dep:leptos_axum",
+  "dep:tower",
+  "dep:tower-http",
+  "dep:tokio",
+  "dep:reqwest",
   "dep:dotenvy",
   "dep:base64",
   "dep:uuid",
